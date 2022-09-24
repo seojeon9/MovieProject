@@ -1,0 +1,83 @@
+0923 회의록
+
+주제 브레인스토밍
+
+- 검색어 트렌드 > 성별, 검색시간, 트렌드, 나이등의 기준으로 트랜드 데이터를 적재
+
+- 환율이나 날씨 등 요인에 따른 항공정보데이터 적재 > 날씨, 항공편 데이터, 도착지 날씨와 항공편 데이터, 인천공항 혼잡도, 환율 정보 데이터
+
+- 영화 산업 흥행 요인 > 개봉일의 흥행이 최종 흥행에 영향을 미치는지에 대한 논문에서 필요한 데이터 DB 구축
+: 영화진흥위원회 api 
+검색 트렌드 api 사용해서 영화 검색 수 가져오기
+네이버 카페나 블로그, 뉴스 게시물 수 크롤링 혹은 검색 api 활용
+인스타그램 게시물 수 크롤링
+=> 데이터의 다양성을 더 고민해봐야함
+영화진흥위원회 api 외 다른 데이터를 긁어올 경우가 있을지 고민
+
+- 특정음식에 대한 키워드로 언제 검색을 하는지 > 날씨별 요일별
+: 검색 트렌드 키워드 api / 날씨 데이터
+
+- 데이터 직군의 수요 증가 > 데이터 직군 채용 정보 DB구축 및 수요 증가 시각화?
+: 워크넷 api / 사람인 api
+=> 그러나 api가 지난 채용정보도 제공해주는지 확인 필요 - X
+: 전체 개발직군에서 데이터 직군의 채용공고가 몇 퍼센트 정도인가
+
+
+* 네이버 검색어 트렌드 api 
+https://developers.naver.com/docs/serviceapi/datalab/search/search.md
+* 네이버 검색 api
+https://developers.naver.com/docs/serviceapi/search/blog/blog.md
+* 영화진흥위원회 api
+http://www.kobis.or.kr/kobisopenapi/homepg/apiservice/searchServiceInfo.do
+* 워크넷 api
+https://openapi.work.go.kr/opi/opi/opia/wantedApiListVw.do#
+* 사람인 api
+https://oapi.saramin.co.kr/guide/job-search
+* 고용행정통계
+https://eis.work.go.kr/eisps/rpt/reptDtl.do?menuId=020010010
+* 서울시 구인·채용인원 (직종별) 통계
+https://data.seoul.go.kr/dataList/10807/S/2/datasetView.do
+* 
+
+* 영화 산업 흥행 요인 논문
+https://scienceon.kisti.re.kr/commons/util/originalView.do?cn=JAKO202003562738140&dbt=JAKO&koi=KISTI1.1003%2FJNL.JAKO202003562738140
+
+피드백
+
+1. 주제가 흥미로워야 함
+2. 상황을 분석하기 위한 용의자가 많아야 함
+3. 분석까지 간다면 더욱 좋긴함.
+
+만약 수집할 데이터가 다양하지 않다면 팩트테이블 하나를 여러차원에서 봐야함
+여러 디맨션에 해당하는 거에 대해 각자 해보는걸로 하자
+수집에 목적을 두지 말고 최종적으로 저장되는걸로
+팩트테이블 하나에 데이터 테이블이 5개
+상관관계에 대한 테이블 
+
+백상예술조
+천만영화조
+주말에 영화 보시조
+블록버스터조
+영화볼꺼조
+공조3
+
+지금까지의 데이터들은 대중에 치우침
+1. 영화관 상영관 갯수 -> 배급의 관점
+2. 전문가 평가/ 평점 -> api
+3. 장르별 / 국적별 영향
+
+
+- 영화진흥위원회 API 활용 [
+일별 박스오피스 - 상엽
+영화 상세정보 - 현진
+] 수집
+
+- 네이버 검색 트렌드 API 활용 영화 검색 수 수집 - 서정
+- 네이버 검색 영화 API 영화 정보 URL 수집 - 서정
+
+- 인스타그램 영화명 해시태그 게시글 수 크롤링 - 승종
+- 네이버 영화 전문가 / 네티즌 평점 크롤링 - 지수
+
+https://developers.naver.com/docs/serviceapi/search/movie/movie.md
+
+AWS서버 제공 > rest api 서버를 올리기 위한 용도
