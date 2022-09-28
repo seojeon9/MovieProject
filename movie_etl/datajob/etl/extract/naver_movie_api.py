@@ -19,46 +19,45 @@ class NaverSearchMovieExtractor:
     @classmethod
     def extract_data(cls):
 
-        keyword, params = cls.__extract_keyword()
-        encText = urllib.parse.quote(keyword)
-        url = cls.URL + encText
-        request = urllib.request.Request(url)
-        request.add_header("X-Naver-Client-Id", cls.CLIENT_ID)
-        request.add_header("X-Naver-Client-Secret", cls.CLIENT_KEY)
-        response = urllib.request.urlopen(request)
-        rescode = response.getcode()
+        data = find_data(DataWarehouse, 'MOVIE_DETAIL')
+        # print(type(data))  # pyspark.sql.dataframe.DataFrame
+        data = data.select('MOVIE_CODE', 'MOVIE_NAME')
+        data = data.to_pandas_on_spark()
+        for dt in data.values:
+            print(dt)
+            cls.movie_code.append(dt[0])
+            cls.movie_name.append(dt[1])
 
-        try:
-            if (rescode == 200):
-                response_body = response.read()
-                res = response_body.decode('utf-8')
-                print(res)
-                keyword = keyword.replace(':', '_')
-                file_name = 'naver_search_movie_' + keyword + '.json'
-                cls.__upload_to_hdfs(file_name, res)
-            else:
-                print("Error Code:" + rescode)
-        except Exception as e:
-            print('예외발생 : ', e)
-            log_dict = cls.__create_log_dict(params)
-            cls.__dump_log(log_dict, e)
-            raise e
+        for i in range(len(cls.movie_code)):
+            code = cls.movie_code[i]
+            name = cls.movie_name[i]
 
-    @classmethod
-    def f(cls, movie):
-        cls.movie_code.append(movie.MOVIE_CODE)
-        cls.movie_name.append(movie.MOVIE_NAME)
-        print(movie.MOVIE_CODE)
-        print(movie.MOVIE_NAME)
+            params = {
+                'query': name
+            }
 
-    @classmethod
-    def __extract_keyword(cls):
-        # 저장된 DW 박스오피스 영화 테이블에서 영화명, 코드 빼와서 영화명으로 검색
-        keyword = '공조2: 인터내셔날'
-        params = {
-            'query': keyword
-        }
-        return keyword, params
+            encText = urllib.parse.quote(name)
+            url = cls.URL + encText
+            request = urllib.request.Request(url)
+            request.add_header("X-Naver-Client-Id", cls.CLIENT_ID)
+            request.add_header("X-Naver-Client-Secret", cls.CLIENT_KEY)
+            response = urllib.request.urlopen(request)
+            rescode = response.getcode()
+
+            try:
+                if (rescode == 200):
+                    response_body = response.read()
+                    res = response_body.decode('utf-8')
+                    print(res)
+                    file_name = 'naver_search_movie_' + code + '.json'
+                    cls.__upload_to_hdfs(file_name, res)
+                else:
+                    print("Error Code:" + rescode)
+            except Exception as e:
+                print('예외발생 : ', e)
+                log_dict = cls.__create_log_dict(params)
+                cls.__dump_log(log_dict, e)
+                raise e
 
     @classmethod
     def __upload_to_hdfs(cls, file_name, res):
