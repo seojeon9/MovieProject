@@ -13,8 +13,8 @@ class NaverSearchMovieExtractor:
     CLIENT_KEY = '8jQTYZWryv'
     FILE_DIR = '/naver/search_movie/'
 
-    movie_code = []
-    movie_name = []
+    movie_codes = []
+    movie_names = []
 
     @classmethod
     def extract_data(cls):
@@ -25,12 +25,12 @@ class NaverSearchMovieExtractor:
         data = data.to_pandas_on_spark()
         for dt in data.values:
             print(dt)
-            cls.movie_code.append(dt[0])
-            cls.movie_name.append(dt[1])
+            cls.movie_codes.append(dt[0])
+            cls.movie_names.append(dt[1])
 
-        for i in range(len(cls.movie_code)):
-            code = cls.movie_code[i]
-            name = cls.movie_name[i]
+        for i in range(len(cls.movie_codes)):
+            code = cls.movie_codes[i]
+            name = cls.movie_names[i]
 
             params = {
                 'query': name
