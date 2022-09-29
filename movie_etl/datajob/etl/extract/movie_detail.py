@@ -1,7 +1,9 @@
 from infra.hdfs_client import get_client
+from infra.jdbc import DataWarehouse, find_data
 from infra.util import execute_rest_api
 import json
 from multiprocessing import get_logger
+import numpy as np
 
 
 class MovieDetailApiExtractor:
@@ -11,24 +13,26 @@ class MovieDetailApiExtractor:
 
     @classmethod
     def extract_data(cls):
-        params = cls.__create_param()
+        box_office_df = find_data(DataWarehouse, 'DAILY_BOX_OFFICE')
+        movie_code_list = box_office_df.select('MOVIE_CODE').rdd.flatMap(lambda x: x).collect()
+        movie_code_list = np.unique(movie_code_list)
 
-        try:
-            res = execute_rest_api('get', cls.URL, {}, params)
-            file_name = 'movie_detail_' + params['movieCd'] + '.json'
-            cls.__upload_to_hdfs(file_name, res)
-
-        except Exception as e:
-            log_dict = cls.__create_log_dict(params)
-            cls.__dump_log(log_dict, e)
-            raise e
-
-    @classmethod
-    def __create_param(cls):
-        return {
+        for i in range(len(movie_code_list)):
+            params = {
             'key': cls.SERVICE_KEY,
-            'movieCd': '20215601'
-        }
+            'movieCd': movie_code_list[i]
+            }
+
+            try:
+                res = execute_rest_api('get', cls.URL, {}, params)
+                file_name = 'movie_detail_' + params['movieCd'] + '.json'
+                cls.__upload_to_hdfs(file_name, res)
+
+            except Exception as e:
+                log_dict = cls.__create_log_dict(params)
+                cls.__dump_log(log_dict, e)
+                raise e
+
 
     @classmethod
     def __upload_to_hdfs(cls, file_name, res):
