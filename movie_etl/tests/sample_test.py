@@ -1,10 +1,14 @@
 import unittest
-from datajob.etl.extract.sample_api import SampleApiExtractor
+from datajob.etl.extract.daily_box_office_api import DailyBoxOfficeExtractor
+from datajob.etl.transform.daily_box_offce_transform import DailyBoxOfficeTransformer
 
 
 class MTest(unittest.TestCase):
+    # def test1(self):
+    #     DailyBoxOfficeExtractor.extract_data(3)
+
     def test1(self):
-        SampleApiExtractor.transform()
+        DailyBoxOfficeTransformer.transform()
 
 
 if __name__ == "__main__":
