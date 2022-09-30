@@ -1,5 +1,4 @@
 import unittest
-
 from datajob.etl.extract.movie_score import MovieScoreExtractor
 
 class MTest(unittest.TestCase):
