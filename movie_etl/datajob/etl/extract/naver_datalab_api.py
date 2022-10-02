@@ -37,7 +37,7 @@ class NaverDatalabApiExtractor:
             print(start_date)
             date = datetime.strptime(start_date, '%Y%m%d')
             start_date = date.strftime("%Y-%m-%d")
-            end_date = date + timedelta(weeks=15)
+            end_date = date + timedelta(weeks=3)
             if end_date > datetime.now():
                 end_date = datetime.now()
             end_date = end_date.strftime("%Y-%m-%d")
