@@ -4,27 +4,32 @@ from datetime import datetime
 from tqdm import tqdm
 import time
 import json
-from hdfs import InsecureClient
+from infra.hdfs_client import get_client
+from infra.jdbc import DataWarehouse, find_data
 
 class MovieScoreExtractor:
-    client = InsecureClient('http://localhost:9870', user='big')
-    url = 'https://movie.naver.com/movie/bi/mi/basic.naver?code=201641'
     std_date=str(datetime.now().date())
     file_dir = '/movie_data/score/'
-    cols = ['title','audi_sc', 'expe_sc', 'neti_sc', 'std_date']
+    cols = ['movie_code', 'title','audi_sc', 'expe_sc', 'neti_sc', 'std_date']
+
+    movie_url_df = find_data(DataWarehouse, 'MOVIE_URL')
+    movie_url_df = movie_url_df.drop_duplicates(['MOVIE_CODE'])
+    movie_code_list = movie_url_df.select('MOVIE_CODE').rdd.flatMap(lambda x: x).collect()
+    movie_url_list = movie_url_df.select('URL').rdd.flatMap(lambda x: x).collect()
 
     @classmethod
     def extract_data(cls):
-        for i in tqdm(range(0,1)):
+        for i in tqdm(range(len(cls.movie_code_list))):
             data=[]
-            file_name = 'movie_score_' + cls.std_date + '.json'
-
-            html = requests.get(cls.url).content
+            file_name = 'movie_score_' + str(cls.movie_code_list[i]) + '_' + cls.std_date + '.json'
+            url = cls.movie_url_list[i]
+            html = requests.get(url).content
             soup = BeautifulSoup(html,"html.parser")
-        #     time.sleep(1)
+            time.sleep(1)
 
             rows=[]
-            
+            rows.append(cls.movie_code_list[i])
+
             try :
                 title=soup.findAll("h3",{"class":"h_movie"})[0].text.split('\n')[1]
                 rows.append(title)
@@ -61,7 +66,8 @@ class MovieScoreExtractor:
                 'meta':{
                     'desc':'네이버 영화 평점 현황',
                     'cols':{
-                        'title':'영화제목'
+                        'movie_code':'영화코드'
+                        ,'title':'영화제목'
                         ,'audi_sc':'관람객평점'
                         ,'expe_sc':'기자및평론가평점'
                         ,'neti_sc':'네티즌평점'
@@ -71,4 +77,4 @@ class MovieScoreExtractor:
             'data':data
             }
 
-            cls.client.write(cls.file_dir+file_name, json.dumps(res, ensure_ascii=False), encoding='utf-8')
+            get_client().write(cls.file_dir+file_name, json.dumps(res, ensure_ascii=False), encoding='utf-8')
