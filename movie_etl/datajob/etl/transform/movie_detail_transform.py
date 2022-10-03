@@ -29,13 +29,17 @@ class MovieDetailTransformer:
         tmp_df = dump_df
 
         for i in range(1, len(movie_code_list)):
-            df_movie = cls.__load_movie_detail_json(movie_code_list, i)
+            try:
+                df_movie = cls.__load_movie_detail_json(movie_code_list, i)
 
-            cls.__generate_genre_list(df_movie, cls.genre_list, movie_code_list, i)
-            cls.__generate_company_code_list(df_movie, movie_code_list, i)
+                cls.__generate_genre_list(df_movie, cls.genre_list, movie_code_list, i)
+                cls.__generate_company_code_list(df_movie, movie_code_list, i)
 
-            dump_df = cls.__select_columns(df_movie)
-            tmp_df = tmp_df.union(dump_df).distinct()
+                dump_df = cls.__select_columns(df_movie)
+                tmp_df = tmp_df.union(dump_df).distinct()
+            except:
+                # del movie_code_list[i]
+                pass
 
         cls.__save_movie_detail(tmp_df)
         cls.__save_movie_genre()
@@ -170,16 +174,16 @@ class MovieDetailTransformer:
 
     @classmethod
     def __load_movie_detail_json(cls, movie_code_list, i):
-        try:
-            path = '/movie_data/detail/movie_detail_' + movie_code_list[i] + '.json'
-            movie_json = get_spark_session().read.json(path, encoding='UTF-8')
-            tmp = movie_json.select('movieInfoResult.movieInfo.movieCd', 'movieInfoResult.movieInfo.movieNm', 'movieInfoResult.movieInfo.prdtYear', 'movieInfoResult.movieInfo.showTm', 'movieInfoResult.movieInfo.openDt', 'movieInfoResult.movieInfo.typeNm', 'movieInfoResult.movieInfo.nations', 'movieInfoResult.movieInfo.directors', 'movieInfoResult.movieInfo.audits', 'movieInfoResult.movieInfo.genres', 'movieInfoResult.movieInfo.actors', 'movieInfoResult.movieInfo.companys').first()
-            df_movie = get_spark_session().createDataFrame([tmp])
+        # try:
+        path = '/movie_data/detail/movie_detail_' + movie_code_list[i] + '.json'
+        movie_json = get_spark_session().read.json(path, encoding='UTF-8')
+        tmp = movie_json.select('movieInfoResult.movieInfo.movieCd', 'movieInfoResult.movieInfo.movieNm', 'movieInfoResult.movieInfo.prdtYear', 'movieInfoResult.movieInfo.showTm', 'movieInfoResult.movieInfo.openDt', 'movieInfoResult.movieInfo.typeNm', 'movieInfoResult.movieInfo.nations', 'movieInfoResult.movieInfo.directors', 'movieInfoResult.movieInfo.audits', 'movieInfoResult.movieInfo.genres', 'movieInfoResult.movieInfo.actors', 'movieInfoResult.movieInfo.companys').first()
+        df_movie = get_spark_session().createDataFrame([tmp])
 
-            return df_movie
+        return df_movie
 
-        except:
-            del movie_code_list[i]
+        # except:
+        #     del movie_code_list[i]
 
     @classmethod
     def __load_box_office_movie_code(cls):
