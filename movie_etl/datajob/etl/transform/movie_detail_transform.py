@@ -20,7 +20,6 @@ class MovieDetailTransformer:
     @classmethod
     def transform(cls):
         movie_code_list = cls.__generate_movie_code_list()
-
         df_movie = cls.__load_movie_detail_json(movie_code_list, 0)
 
         cls.__generate_genre_list(df_movie, cls.genre_list, movie_code_list, 0)
@@ -36,7 +35,6 @@ class MovieDetailTransformer:
             cls.__generate_company_code_list(df_movie, movie_code_list, i)
 
             dump_df = cls.__select_columns(df_movie)
-
             tmp_df = tmp_df.union(dump_df).distinct()
 
         cls.__save_movie_detail(tmp_df)
