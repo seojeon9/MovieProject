@@ -1,0 +1,12 @@
+2022-09-30
+
+1. 인스타그램 크롤링 이슈
+: 기존에 리눅스 환경에서 인스타그램 게시글 크롤링하는게 어려워 윈도우 환경에서 진행하기로 결정. 그런데 그럴 경우 airflow로 붙이기 까다로운 부분이 있을 것 같아서 고민하다가 빼기로 결정
+
+2. 장르 목록
+: 기존에 영화상세정보에서 뽑아온 장르들 Unique돌려서 진행하고 있었는데 영화 장르 리스트 발견해서 DB에 직접 넣을 수 있게됨.
+https://www.kobis.or.kr/kobis/business/stat/online/onlineGenreStat.do?CSRFToken=FuIcgG4niu_F-efVPTZwrTFM139E0Ib2Y9TkIuumORg&loadEnd=0&searchType=search&sSearchYearFrom=2012&sSearchMonthFrom=09&sSearchYearTo=2022&sSearchMonthTo=03
+
+3. 10월 4일 오전 9시까지 ETL + Datamart 완료 계획
+
+4. 10월 2일 오전 11시 강사님과 DM설계 피드백 약속!
