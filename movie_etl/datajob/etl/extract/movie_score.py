@@ -14,69 +14,71 @@ class MovieScoreExtractor:
 
     @classmethod
     def extract_data(cls):
-        try :
-            movie_url_df = find_data(DataWarehouse, 'MOVIE_URL')
-            movie_url_df = movie_url_df.drop_duplicates(['MOVIE_CODE'])
-            movie_code_list = movie_url_df.select('MOVIE_CODE').rdd.flatMap(lambda x: x).collect()
-            movie_url_list = movie_url_df.select('URL').rdd.flatMap(lambda x: x).collect()
+        
+        movie_url_df = find_data(DataWarehouse, 'MOVIE_URL')
+        movie_url_df = movie_url_df.drop_duplicates(['MOVIE_CODE'])
+        movie_code_list = movie_url_df.select('MOVIE_CODE').rdd.flatMap(lambda x: x).collect()
+        print(len(movie_code_list))
+        movie_url_list = movie_url_df.select('URL').rdd.flatMap(lambda x: x).collect()
+        print(len(movie_url_list))
 
-            for i in range(len(movie_code_list)):
-                data=[]
-                file_name = 'movie_score_' + str(movie_code_list[i]) + '_' + cls.std_date + '.json'
-                url = movie_url_list[i]
-                html = requests.get(url).content
-                soup = BeautifulSoup(html,"html.parser")
+        for i in range(len(movie_code_list)):
+            data=[]
+            file_name = 'movie_score_' + str(movie_code_list[i]) + '_' + cls.std_date + '.json'
+            url = movie_url_list[i]
+            html = requests.get(url).content
+            soup = BeautifulSoup(html,"html.parser")
+            # print(soup)
 
-                rows=[]
-                rows.append(cls.movie_code_list[i])
+            rows=[]
+            rows.append(movie_code_list[i])
 
-                try :
-                    title=soup.findAll("h3",{"class":"h_movie"})[0].text.split('\n')[1]
-                    rows.append(title)
-                except Exception as e:
-                    rows.append('없음')
-                    
-                    
-                try :
-                    audi_sc=soup.findAll("span",{"class":"st_on"})[0].text.split(" ")[2].replace('점',"")
-                    rows.append(audi_sc)
-                except Exception as e:
-                    rows.append('없음')
-                    
-                    
-                try :
-                    expe_sc=soup.findAll("div",{"class":"spc_score_area"})[0].text.split("\n\n")[2]
-                    rows.append(expe_sc)
-                except Exception as e:
-                    rows.append('없음')
+            try :
+                title=soup.findAll("h3",{"class":"h_movie"})[0].text.split('\n')[1]
+                rows.append(title)
+            except Exception as e:
+                rows.append('없음')
                 
                 
-                try :
-                    neti_sc=soup.findAll("a",{"id":"pointNetizenPersentBasic"})[0].text
-                    rows.append(neti_sc)
-                except Exception as e:
-                    rows.append('없음')
+            try :
+                audi_sc=soup.findAll("span",{"class":"st_on"})[0].text.split(" ")[2].replace('점',"")
+                rows.append(audi_sc)
+            except Exception as e:
+                rows.append('없음')
                 
-                rows.append(cls.std_date)
+                
+            try :
+                expe_sc=soup.findAll("div",{"class":"spc_score_area"})[0].text.split("\n\n")[2]
+                rows.append(expe_sc)
+            except Exception as e:
+                rows.append('없음')
+            
+            
+            try :
+                neti_sc=soup.findAll("a",{"id":"pointNetizenPersentBasic"})[0].text
+                rows.append(neti_sc)
+            except Exception as e:
+                rows.append('없음')
+            
+            rows.append(cls.std_date)
+            print(rows)
+            tmp = dict(zip(cls.cols, rows))
+            data.append(tmp)
 
-                tmp = dict(zip(cls.cols, rows))
-                data.append(tmp)
-
-                res = {
-                    'meta':{
-                        'desc':'네이버 영화 평점 현황',
-                        'cols':{
-                            'movie_code':'영화코드'
-                            ,'title':'영화제목'
-                            ,'audi_sc':'관람객평점'
-                            ,'expe_sc':'기자및평론가평점'
-                            ,'neti_sc':'네티즌평점'
-                            ,'std_date':'수집일자'
-                        },
+            res = {
+                'meta':{
+                    'desc':'네이버 영화 평점 현황',
+                    'cols':{
+                        'movie_code':'영화코드'
+                        ,'title':'영화제목'
+                        ,'audi_sc':'관람객평점'
+                        ,'expe_sc':'기자및평론가평점'
+                        ,'neti_sc':'네티즌평점'
+                        ,'std_date':'수집일자'
                     },
-                'data':data
-                }
+                },
+            'data':data
+            }
 
-                get_client().write(cls.file_dir+file_name, json.dumps(res, ensure_ascii=False), encoding='utf-8')
-        except:
-            pass
+            get_client().write(cls.file_dir+file_name, json.dumps(res, ensure_ascii=False), encoding='utf-8', overwrite=True)
+

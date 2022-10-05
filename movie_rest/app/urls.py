@@ -17,8 +17,6 @@ from django.contrib import admin
 from django.urls import path
 
 router = routers.DefaultRouter()
-# SAMPLE
-# router.register(r'corona/facility', rest_view.CoFacilityViewSet)
 # router.register(r'movie/movie_audi', rest_view.MovieAudiViewSet)
 
 

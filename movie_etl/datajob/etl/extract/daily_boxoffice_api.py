@@ -6,7 +6,7 @@ from infra.util import cal_std_day, cal_std_day_yyyymmdd, execute_rest_api
 
 class DailyBoxofficeExtractor:
     URL = 'http://www.kobis.or.kr/kobisopenapi/webservice/rest/boxoffice/searchDailyBoxOfficeList.json'
-    SERVICE_KEY = '3ad2d800ada4ee67f4d049b66e903680'
+    SERVICE_KEY = '6f2b465b25f40650abb3330460e110c2'
     FILE_DIR = '/movie/daily_box_office/'
 
     @classmethod
