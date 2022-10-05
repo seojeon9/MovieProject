@@ -19,15 +19,21 @@ class MovieUrlAndActorsTransformer:
 
     @classmethod
     def __save_link(cls, movie_code, items):
-        link_df = cls.__generate_link_df(movie_code, items)
-        link_df = get_spark_session().createDataFrame(link_df)
-        save_data(DataWarehouse, link_df, 'MOVIE_URL')
+        try:
+            link_df = cls.__generate_link_df(movie_code, items)
+            link_df = get_spark_session().createDataFrame(link_df)
+            save_data(DataWarehouse, link_df, 'MOVIE_URL')
+        except:
+            print('save_link error')
 
     @classmethod
     def __save_actors(cls, movie_code, items):
-        actors_df = cls.__generate_actors_df(movie_code, items)
-        actors_df = get_spark_session().createDataFrame(actors_df)
-        save_data(DataWarehouse, actors_df, 'ACTORS')
+        try:
+            actors_df = cls.__generate_actors_df(movie_code, items)
+            actors_df = get_spark_session().createDataFrame(actors_df)
+            save_data(DataWarehouse, actors_df, 'ACTORS')
+        except:
+            print('save_actors error')
 
     @classmethod
     def __generate_link_df(cls, movie_code, items):
@@ -36,7 +42,6 @@ class MovieUrlAndActorsTransformer:
             'MOVIE_CODE': [movie_code],
             'URL': [link]
         })
-
         return link_df
 
     @classmethod
@@ -65,7 +70,7 @@ class MovieUrlAndActorsTransformer:
 
     @classmethod
     def __load_json(cls, movie_code):
-        path = '/naver/search_movie/naver_search_movie_' + movie_code + '.json'
+        path = '/movie/naver_search_movie/naver_search_movie_' + movie_code + '.json'
         movie = get_spark_session().read.option(
             "multiline", "true").json(path, encoding='UTF-8').first()
 
