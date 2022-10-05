@@ -16,7 +16,7 @@ class NaverDatalabTransformer:
         # print(movie_code_list)
 
         for i in range(len(movie_code_list)):
-            path = '/naver/datalab/naver_datalab_' + movie_code_list[i] + '.json'
+            path = '/movie/naver_datalab/naver_datalab_' + movie_code_list[i] + '.json'
 
             datalab = get_spark_session().read.json(path, encoding='UTF-8').first()
 

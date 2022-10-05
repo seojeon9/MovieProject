@@ -65,7 +65,7 @@ class MovieUrlAndActorsTransformer:
 
     @classmethod
     def __load_json(cls, movie_code):
-        path = '/naver/search_movie/naver_search_movie_' + movie_code + '.json'
+        path = '/movie/naver_search_movie/naver_search_movie_' + movie_code + '.json'
         movie = get_spark_session().read.option(
             "multiline", "true").json(path, encoding='UTF-8').first()
 

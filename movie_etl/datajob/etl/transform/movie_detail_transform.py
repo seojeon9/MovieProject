@@ -181,7 +181,7 @@ class MovieDetailTransformer:
     @classmethod
     def __load_movie_detail_json(cls, movie_code_list, i):
         try:
-            path = '/movie_data/detail/movie_detail_' + movie_code_list[i] + '.json'
+            path = '/movie/detail/movie_detail_' + movie_code_list[i] + '.json'
             movie_json = get_spark_session().read.json(path, encoding='UTF-8')
             tmp = movie_json.select('movieInfoResult.movieInfo.movieCd', 'movieInfoResult.movieInfo.movieNm', 'movieInfoResult.movieInfo.prdtYear', 'movieInfoResult.movieInfo.showTm', 'movieInfoResult.movieInfo.openDt', 'movieInfoResult.movieInfo.typeNm', 'movieInfoResult.movieInfo.nations', 'movieInfoResult.movieInfo.directors', 'movieInfoResult.movieInfo.audits', 'movieInfoResult.movieInfo.genres', 'movieInfoResult.movieInfo.actors', 'movieInfoResult.movieInfo.companys').first()
             df_movie = get_spark_session().createDataFrame([tmp])

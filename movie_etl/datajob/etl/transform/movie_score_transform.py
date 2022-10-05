@@ -18,7 +18,7 @@ class MovieScoreTransformer:
         std_date_list = []
 
         for i in range(len(movie_code_list)):
-            path = '/movie_data/score/movie_score_' + \
+            path = '/movie/score/movie_score_' + \
                 movie_code_list[i] + '_' + \
                 cal_std_day(1) + '.json'
             mv_score_json = get_spark_session().read.json(path, encoding='UTF-8').first()
