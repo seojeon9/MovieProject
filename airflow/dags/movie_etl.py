@@ -7,7 +7,7 @@ from airflow import DAG
 # Operators; we need this to operate!
 from airflow.operators.bash import BashOperator
 with DAG(
-    'corona_etl',
+    'movie_etl',
     # These args will get passed on to each operator
     # You can override them on a per-task basis during operator initialization
     default_args={
@@ -18,11 +18,11 @@ with DAG(
         'retries': 2,
         'retry_delay': timedelta(minutes=3),
     },
-    description='Corona ETL Project',
+    description='Movie ETL Project',
     schedule=timedelta(days=1),
-    start_date=datetime(2022, 9, 20, 4, 30),
+    start_date=datetime(2022, 10, 6, 4, 30),
     catchup=False,
-    tags=['corona_etl'],
+    tags=['movie_etl'],
 ) as dag:
 
     # t1, t2 and t3 are examples of tasks created by instantiating operators
