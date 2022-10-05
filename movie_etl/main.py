@@ -1,4 +1,16 @@
 import sys
+from datajob.datamart.actor_datamart import Actor
+from datajob.datamart.company_datamart import Company
+from datajob.datamart.genre_datamart import Genre
+from datajob.datamart.movie_audi_datamart import MovieAudi
+from datajob.datamart.movie_datamart import Movie
+from datajob.datamart.movie_hit_datamart import MovieHit
+from datajob.datamart.movie_rank_datamart import MovieRank
+from datajob.datamart.movie_sales_datamart import MovieSales
+from datajob.datamart.movie_score_datamart import MovieScore
+from datajob.datamart.movie_scrn_datamart import MovieScrn
+from datajob.datamart.movie_search_datamart import MovieSearch
+from datajob.datamart.movie_show_datamart import MovieShow
 from datajob.etl.extract.daily_boxoffice_api import DailyBoxofficeExtractor
 from datajob.etl.extract.movie_detail import MovieDetailApiExtractor
 from datajob.etl.extract.movie_score import MovieScoreExtractor
@@ -7,38 +19,51 @@ from datajob.etl.extract.naver_search_api import NaverSearchMovieExtractor
 from datajob.etl.transform.daily_boxoffice_transform import DailyBoxOfficeTransformer
 from datajob.etl.transform.movie_detail_transform import MovieDetailTransformer
 from datajob.etl.transform.movie_score_transform import MovieScoreTransformer
-from datajob.etl.transform.movie_search_ratio_transform import MovieSearchRatioTransfomer
 from datajob.etl.transform.movie_url_and_actors_transform import MovieUrlAndActorsTransformer
+from datajob.etl.transform.naver_datalab_transform import NaverDatalabTransformer
+
+def extract_execute():
+    NaverDatalabApiExtractor.extract_data()
+    NaverSearchMovieExtractor.extract_data()
 
 
 def transform_execute():
-    CoronaPatientTransformer.transform()
-    CoronaVaccineTransformer.transform()
+    MovieUrlAndActorsTransformer.transform()
+    NaverDatalabTransformer.transform()
+
 
 def datamart_execute():
-    CoPopuDensity.save()
-    CoVaccine.save()
+    Actor.save()
+    Company.save()
+    Genre.save()
+    MovieAudi.save()
+    MovieRank.save()
+    MovieSales.save()
+    MovieScore.save()
+    MovieScrn.save()
+    MovieSearch.save()
+    MovieShow.save()
+
 
 works = {
     'extract':{
+        'execute':extract_execute,
         'daily_boxoffice': DailyBoxofficeExtractor.extract_data,
         'movie_detail':MovieDetailApiExtractor.extract_data,
         'movie_score':MovieScoreExtractor.extract_data,
         'naver_datalab':NaverDatalabApiExtractor.extract_data,
-        'naver_search':NaverSearchMovieExtractor.extract_data,
+        'naver_search':NaverSearchMovieExtractor.extract_data
     },
     'transform':{
         'daily_boxoffice':DailyBoxOfficeTransformer.transform,
         'movie_detail':MovieDetailTransformer.transform,
         'movie_score':MovieScoreTransformer.transform,
-        'naver_search_ratio':MovieSearchRatioTransfomer.transform,
-        'movie_url_actors':MovieUrlAndActorsTransformer.transform,
-        'execute':transform_execute,
+        'execute':transform_execute
     },
     'datamart':{
         'execute':datamart_execute,
-        'co_popu_density':CoPopuDensity.save,
-        'co_vaccine':CoVaccine.save
+        'movie_hit':MovieHit.save,
+        'movie':Movie.save
     }
 
 }
