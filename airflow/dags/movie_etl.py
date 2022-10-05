@@ -16,11 +16,11 @@ with DAG(
         'email_on_failure': False,
         'email_on_retry': False,
         'retries': 2,
-        'retry_delay': timedelta(minutes=3),
+        'retry_delay': timedelta(minutes=20),
     },
     description='Movie ETL Project',
     # schedule=timedelta(days=1),
-    start_date=datetime(2022, 10, 6, 4, 30),
+    start_date=datetime(2022, 10, 5, 4, 30),
     catchup=False,
     tags=['movie_etl'],
 ) as dag:
