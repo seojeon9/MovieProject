@@ -9,11 +9,11 @@ import numpy as np
 class MovieDetailApiExtractor:
     URL = 'http://www.kobis.or.kr/kobisopenapi/webservice/rest/movie/searchMovieInfo.json'
     SERVICE_KEY = '6cdee3cbd6d29e49fdc6bd17a2feb85b'
-    FILE_DIR = '/movie_data/detail/'
+    FILE_DIR = '/movie/detail/'
 
     @classmethod
     def extract_data(cls):
-        box_office_df = find_data(DataWarehouse, 'DAILY_BOX_OFFICE')
+        box_office_df = find_data(DataWarehouse, 'DAILY_BOXOFFICE')
         movie_code_list = box_office_df.select('MOVIE_CODE').rdd.flatMap(lambda x: x).collect()
         movie_code_list = np.unique(movie_code_list)
 

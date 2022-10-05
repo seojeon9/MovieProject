@@ -1,5 +1,6 @@
 import unittest
 from datajob.etl.extract.movie_detail import MovieDetailApiExtractor
+from datajob.etl.transform.movie_detail import MovieDetailTrans
 from datajob.etl.transform.movie_detail_transform import MovieDetailTransformer
 
 
@@ -9,6 +10,9 @@ class MTest(unittest.TestCase):
 
     def test2(self):
         MovieDetailTransformer.transform()
+
+    def test3(self):
+        MovieDetailTrans.transform()
 
 
 if __name__ == "__main__":

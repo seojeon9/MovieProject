@@ -12,7 +12,7 @@ class NaverDatalabApiExtractor:
     URL = 'https://openapi.naver.com/v1/datalab/search'
     CLIENT_ID = 'pOdfwRraC5W55dxPeRPQ'
     CLIENT_KEY = '8jQTYZWryv'
-    FILE_DIR = '/naver/datalab/'
+    FILE_DIR = '/movie/naver_datalab/'
 
     movie_codes = []
     movie_names = []
@@ -34,16 +34,21 @@ class NaverDatalabApiExtractor:
         for i in range(len(cls.movie_codes)):
             code = cls.movie_codes[i]
             start_date = cls.open_dates[i]
+
             print(start_date)
+
             date = datetime.strptime(start_date, '%Y%m%d')
             start_date = date.strftime("%Y-%m-%d")
-            end_date = date + timedelta(weeks=3)
+            end_date = date + timedelta(weeks=15)
+
             if end_date > datetime.now():
                 end_date = datetime.now()
+
             end_date = end_date.strftime("%Y-%m-%d")
             time_unit = 'week'  # date, week, month
             name = cls.movie_names[i]
             keword = name.split(':')[0]
+
             # body = "{\"startDate\":\"2022-09-01\",\"endDate\":\"2022-09-28\",\"timeUnit\":\"week\",\"keywordGroups\":[{\"groupName\":\"공조2: 인터내셔날\",\"keywords\":[\"공조2: 인터내셔날\",\"공조2\"]}]}"
             body = '{\"startDate\":\"' + start_date + '\",\"endDate\":\"' + end_date + '\",\"timeUnit\":\"' + \
                 time_unit + \
@@ -52,6 +57,7 @@ class NaverDatalabApiExtractor:
                 name + '\",\"' + keword + '\"]}]}'
 
             print(body)
+
             params = {
                 'body': body
             }
