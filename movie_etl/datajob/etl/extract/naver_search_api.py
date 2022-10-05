@@ -12,7 +12,7 @@ class NaverSearchMovieExtractor:
     URL = 'https://openapi.naver.com/v1/search/movie.json?query='
     CLIENT_ID = 'pOdfwRraC5W55dxPeRPQ'
     CLIENT_KEY = '8jQTYZWryv'
-    FILE_DIR = '/naver/search_movie/'
+    FILE_DIR = '/movie/naver_search_movie/'
 
     movie_codes = []
     movie_names = []

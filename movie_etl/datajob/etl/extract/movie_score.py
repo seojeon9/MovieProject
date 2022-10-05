@@ -7,7 +7,7 @@ from infra.jdbc import DataWarehouse, find_data
 
 class MovieScoreExtractor:
     std_date=str(datetime.now().date())
-    file_dir = '/movie_data/score/'
+    file_dir = '/movie/score/'
     cols = ['movie_code', 'title','audi_sc', 'expe_sc', 'neti_sc', 'std_date']
 
     movie_url_df = find_data(DataWarehouse, 'MOVIE_URL')

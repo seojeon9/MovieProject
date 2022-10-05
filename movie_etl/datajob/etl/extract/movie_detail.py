@@ -9,7 +9,7 @@ import numpy as np
 class MovieDetailApiExtractor:
     URL = 'http://www.kobis.or.kr/kobisopenapi/webservice/rest/movie/searchMovieInfo.json'
     SERVICE_KEY = '6cdee3cbd6d29e49fdc6bd17a2feb85b'
-    FILE_DIR = '/movie_data/detail/'
+    FILE_DIR = '/movie/detail/'
 
     @classmethod
     def extract_data(cls):

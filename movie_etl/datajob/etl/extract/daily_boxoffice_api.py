@@ -1,7 +1,7 @@
 from multiprocessing import get_logger
 import json
 from infra.hdfs_client import get_client
-from infra.util import cal_std_day_yyyymmdd, execute_rest_api
+from infra.util import cal_std_day, execute_rest_api
 
 
 class DailyBoxofficeExtractor:
@@ -30,7 +30,7 @@ class DailyBoxofficeExtractor:
     def __create_param(cls, befor_day):
         return {
             'key': cls.SERVICE_KEY,
-            'targetDt': cal_std_day_yyyymmdd(befor_day)
+            'targetDt': cal_std_day(befor_day)
         }
 
     @classmethod

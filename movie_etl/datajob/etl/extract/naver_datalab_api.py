@@ -12,7 +12,7 @@ class NaverDatalabApiExtractor:
     URL = 'https://openapi.naver.com/v1/datalab/search'
     CLIENT_ID = 'pOdfwRraC5W55dxPeRPQ'
     CLIENT_KEY = '8jQTYZWryv'
-    FILE_DIR = '/naver/datalab/'
+    FILE_DIR = '/movie/naver_datalab/'
 
     movie_codes = []
     movie_names = []
