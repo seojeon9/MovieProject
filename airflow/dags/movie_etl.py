@@ -19,7 +19,7 @@ with DAG(
         'retry_delay': timedelta(minutes=3),
     },
     description='Movie ETL Project',
-    schedule=timedelta(days=1),
+    # schedule=timedelta(days=1),
     start_date=datetime(2022, 10, 6, 4, 30),
     catchup=False,
     tags=['movie_etl'],
@@ -27,28 +27,136 @@ with DAG(
 
     # t1, t2 and t3 are examples of tasks created by instantiating operators
     t1 = BashOperator(
-        task_id='extract_corona_api',
-        cwd='/home/big/study/corona_etl',
-        bash_command='python3 main.py extract corona_api',
+        task_id='extract_daily_boxoffice',
+        cwd='/home/big/study/movie_etl',
+        bash_command='python3 main.py extract daily_boxoffice',
     )
 
     t2 = BashOperator(
-        task_id='extract_corona_vaccine',
-        cwd='/home/big/study/corona_etl',
-        bash_command='python3 main.py extract corona_vaccine',
-        retries=3,
+        task_id='transform_daily_boxoffice',
+        cwd='/home/big/study/movie_etl',
+        bash_command='python3 main.py transform daily_boxoffice',
+        # retries=3,
     )
 
     t3 = BashOperator(
-        task_id='transform_execute',
-        cwd='/home/big/study/corona_etl',
-        bash_command='python3 main.py transform execute',
+        task_id='extract_movie_detail',
+        cwd='/home/big/study/movie_etl',
+        bash_command='python3 main.py extract movie_detail',
     )
 
     t4 = BashOperator(
-        task_id='datamart_execute',
-        cwd='/home/big/study/corona_etl',
-        bash_command='python3 main.py datamart execute',
+        task_id='transform_movie_detail',
+        cwd='/home/big/study/movie_etl',
+        bash_command='python3 main.py transform movie_detail',
+    )
+
+    t5 = BashOperator(
+        task_id='extract_naver_datalab',
+        cwd='/home/big/study/movie_etl',
+        bash_command='python3 main.py extract naver_datalab',
+    )
+
+    t6 = BashOperator(
+        task_id='extract_naver_search',
+        cwd='/home/big/study/movie_etl',
+        bash_command='python3 main.py extract naver_search',
+    )
+
+    t7 = BashOperator(
+        task_id='extract_movie_score',
+        cwd='/home/big/study/movie_etl',
+        bash_command='python3 main.py extract movie_score',
+    )
+
+    t8 = BashOperator(
+        task_id='transform_movie_score',
+        cwd='/home/big/study/movie_etl',
+        bash_command='python3 main.py transform movie_score',
+    )
+
+    t9 = BashOperator(
+        task_id='transform_movie_url_actor',
+        cwd='/home/big/study/movie_etl',
+        bash_command='python3 main.py transform movie_url_actor',
+    )
+
+    t10 = BashOperator(
+        task_id='transform_naver_datalab',
+        cwd='/home/big/study/movie_etl',
+        bash_command='python3 main.py transform naver_datalab',
+    )
+
+    t11 = BashOperator(
+        task_id='datamart_movie_hit',
+        cwd='/home/big/study/movie_etl',
+        bash_command='python3 main.py datamart movie_hit',
+    )
+
+    t12 = BashOperator(
+        task_id='datamart_movie',
+        cwd='/home/big/study/movie_etl',
+        bash_command='python3 main.py datamart movie',
+    )
+
+    t13 = BashOperator(
+        task_id='datamart_actor',
+        cwd='/home/big/study/movie_etl',
+        bash_command='python3 main.py datamart actor',
+    )
+
+    t14 = BashOperator(
+        task_id='datamart_company',
+        cwd='/home/big/study/movie_etl',
+        bash_command='python3 main.py datamart company',
+    )
+
+    t15 = BashOperator(
+        task_id='datamart_genre',
+        cwd='/home/big/study/movie_etl',
+        bash_command='python3 main.py datamart genre',
+    )
+
+    t16 = BashOperator(
+        task_id='datamart_movieAudi',
+        cwd='/home/big/study/movie_etl',
+        bash_command='python3 main.py datamart movieAudi',
+    )
+
+    t17 = BashOperator(
+        task_id='datamart_movieRank',
+        cwd='/home/big/study/movie_etl',
+        bash_command='python3 main.py datamart movieRank',
+    )
+
+    t18 = BashOperator(
+        task_id='datamart_movieSales',
+        cwd='/home/big/study/movie_etl',
+        bash_command='python3 main.py datamart movieSales',
+    )
+
+    t19 = BashOperator(
+        task_id='datamart_movieScore',
+        cwd='/home/big/study/movie_etl',
+        bash_command='python3 main.py datamart movieScore',
+    )
+
+    t20 = BashOperator(
+        task_id='datamart_movieScrn',
+        cwd='/home/big/study/movie_etl',
+        bash_command='python3 main.py datamart movieScrn',
+    )
+
+    t21 = BashOperator(
+        task_id='datamart_movieSearch',
+        cwd='/home/big/study/movie_etl',
+        bash_command='python3 main.py datamart movieSearch',
+    )
+
+    t22 = BashOperator(
+        task_id='datamart_movieShow',
+        cwd='/home/big/study/movie_etl',
+        bash_command='python3 main.py datamart movieShow',
     )
 
     t1.doc_md = dedent(
@@ -75,6 +183,8 @@ with DAG(
     """
     )
 
+    t1 >> t2 >> t3 >> t4 >> [t5, t6] 
+    t5 >> [t9, t10] >> t7  >> t8 >> t11 >> t12 >> [t13, t14, t15, t16, t17, t18, t19, t20, t21, t22]
+    t6 >> [t9, t10]
 
-
-[t1, t2] >> t3 >> t4
+    #t1 >> t2 >> t3 >> t4 >> [t5, t6] >> [t9, t10] >> t7 >> t8 >> t11 > t12 >> [t13, t14, t15, t16, t17, t18, t19, t20]

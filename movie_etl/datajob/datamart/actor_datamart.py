@@ -1,4 +1,5 @@
 from infra.jdbc import DataMart, DataWarehouse, find_data, save_data
+from infra.logger import get_logger
 
 class Actor:
     @classmethod
@@ -14,4 +15,7 @@ class Actor:
                                     ,actors_join.ACTOR_NAME
                                     ,actors_join.HIT_GRADE)
 
-        save_data(DataMart, actor, 'ACTOR')
+        try:
+            save_data(DataMart, actor, 'ACTOR')
+        except:
+            get_logger('dm actor').error(actor)

@@ -58,13 +58,25 @@ works = {
         'daily_boxoffice':DailyBoxOfficeTransformer.transform,
         'movie_detail':MovieDetailTransformer.transform,
         'movie_score':MovieScoreTransformer.transform,
+        'movie_url_actor':MovieUrlAndActorsTransformer.transform,
+        'naver_datalab':NaverDatalabTransformer.transform,
         'execute':transform_execute
     },
     'datamart':{
         'execute':datamart_execute,
         'movie_hit':MovieHit.save,
-        'movie':Movie.save
-    }
+        'movie':Movie.save,
+        'actor':Actor.save,
+        'company':Company.save,
+        'genre':Genre.save,
+        'movieAudi':MovieAudi.save,
+        'movieRank':MovieRank.save,
+        'movieSales':MovieSales.save,
+        'movieScore':MovieScore.save,
+        'movieScrn':MovieScrn.save,
+        'movieSearch':MovieSearch.save,
+        'movieShow':MovieShow.save
+        }
 
 }
 

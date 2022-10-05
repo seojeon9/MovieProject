@@ -6,7 +6,7 @@ from infra.util import cal_std_day, cal_std_day_yyyymmdd
 
 class DailyBoxOfficeTransformer:
 
-    # date = '20220801'
+    # date = '20220825'
 
     @classmethod
     def transform(cls, befor_cnt):
@@ -93,7 +93,7 @@ class DailyBoxOfficeTransformer:
     @classmethod
     def __load_daily_box_office_json(cls, befor_cnt):
         path = '/movie_data/daily_box_office/daliy_box_office_' + cal_std_day_yyyymmdd(befor_cnt) + '.json'
-        # path = '/movie_data/daily_box_office/daliy_box_office_' + cls.date + '.json'
+        #path = '/movie_data/daily_box_office/daliy_box_office_' + cls.date + '.json'
         movie_json = get_spark_session().read.json(path, encoding='UTF-8')
 
         tmp = movie_json.select('boxOfficeResult.showRange', 'boxOfficeResult.dailyBoxOfficeList').first()

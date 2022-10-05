@@ -13,7 +13,7 @@ class MovieDetailApiExtractor:
 
     @classmethod
     def extract_data(cls):
-        box_office_df = find_data(DataWarehouse, 'DAILY_BOX_OFFICE')
+        box_office_df = find_data(DataWarehouse, 'DAILY_BOXOFFICE')
         movie_code_list = box_office_df.select('MOVIE_CODE').rdd.flatMap(lambda x: x).collect()
         movie_code_list = np.unique(movie_code_list)
 

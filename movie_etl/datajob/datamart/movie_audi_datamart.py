@@ -33,7 +33,7 @@ class MovieAudi:
     @classmethod
     def __select_sec_audi_increase_ratio(cls, open_audi_df, sec_audi_df):
         # (2주차 - 개봉일)/개봉일 : round(((sec_audi_cnt - open_audi_cnt) / open_audi_cnt * 100), 3)
-                open_audi_df = open_audi_df.join(
+        open_audi_df = open_audi_df.join(
             sec_audi_df, on='MOVIE_CODE', how='left')
 
         open_audi_df = open_audi_df.select('MOVIE_CODE', 'MOVIE_NAME', 'OPEN_AUDI_CNT', round(
