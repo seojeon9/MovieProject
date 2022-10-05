@@ -9,7 +9,9 @@ class DailyBoxOfficeTransformer:
     # date = '20220825'
 
     @classmethod
-    def transform(cls, befor_cnt):
+    def transform(cls, befor_cnt=1):
+        date = cal_std_day_yyyymmdd(befor_cnt)
+
         df_movie_select = cls.__load_daily_box_office_json(befor_cnt)
             
         dump_df = cls.__select_columns(df_movie_select, 0)
@@ -23,7 +25,7 @@ class DailyBoxOfficeTransformer:
         
         save_data(DataWarehouse, daily_boxoffice_df, 'DAILY_BOXOFFICE')
 
-        box_office_df = cls.load_box_office_table_dbo_id()
+        box_office_df = cls.load_box_office_table_dbo_id(date)
         tmp_df = cls.__select_acc(df_movie_select, 0)
         
         for i in range(1, 10):
@@ -55,9 +57,9 @@ class DailyBoxOfficeTransformer:
         return dump_df
 
     @classmethod
-    def load_box_office_table_dbo_id(cls):
+    def load_box_office_table_dbo_id(cls, date):
         box_office_df = find_data(DataWarehouse, 'DAILY_BOXOFFICE')
-        box_office_df = box_office_df.select('DBO_ID', 'MOVIE_CODE').where(box_office_df.STD_DATE == cls.date)
+        box_office_df = box_office_df.select('DBO_ID', 'MOVIE_CODE').where(box_office_df.STD_DATE == date)
         return box_office_df
 
     @classmethod
@@ -91,8 +93,8 @@ class DailyBoxOfficeTransformer:
         return dump_df
 
     @classmethod
-    def __load_daily_box_office_json(cls, befor_cnt):
-        path = '/movie_data/daily_box_office/daliy_box_office_' + cal_std_day_yyyymmdd(befor_cnt) + '.json'
+    def __load_daily_box_office_json(cls, befor_cnt=1):
+        path = '/movie/daily_box_office/daliy_box_office_' + cal_std_day_yyyymmdd(befor_cnt) + '.json'
         #path = '/movie_data/daily_box_office/daliy_box_office_' + cls.date + '.json'
         movie_json = get_spark_session().read.json(path, encoding='UTF-8')
 

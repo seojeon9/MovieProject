@@ -10,18 +10,20 @@ class MovieScoreExtractor:
     file_dir = '/movie/score/'
     cols = ['movie_code', 'title','audi_sc', 'expe_sc', 'neti_sc', 'std_date']
 
-    movie_url_df = find_data(DataWarehouse, 'MOVIE_URL')
-    movie_url_df = movie_url_df.drop_duplicates(['MOVIE_CODE'])
-    movie_code_list = movie_url_df.select('MOVIE_CODE').rdd.flatMap(lambda x: x).collect()
-    movie_url_list = movie_url_df.select('URL').rdd.flatMap(lambda x: x).collect()
+    
 
     @classmethod
     def extract_data(cls):
         try :
-            for i in range(len(cls.movie_code_list)):
+            movie_url_df = find_data(DataWarehouse, 'MOVIE_URL')
+            movie_url_df = movie_url_df.drop_duplicates(['MOVIE_CODE'])
+            movie_code_list = movie_url_df.select('MOVIE_CODE').rdd.flatMap(lambda x: x).collect()
+            movie_url_list = movie_url_df.select('URL').rdd.flatMap(lambda x: x).collect()
+
+            for i in range(len(movie_code_list)):
                 data=[]
-                file_name = 'movie_score_' + str(cls.movie_code_list[i]) + '_' + cls.std_date + '.json'
-                url = cls.movie_url_list[i]
+                file_name = 'movie_score_' + str(movie_code_list[i]) + '_' + cls.std_date + '.json'
+                url = movie_url_list[i]
                 html = requests.get(url).content
                 soup = BeautifulSoup(html,"html.parser")
 
