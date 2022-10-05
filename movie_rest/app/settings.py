@@ -81,7 +81,7 @@ WSGI_APPLICATION = 'app.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
+        'ENGINE':'django.db.backends.oracle',
         'NAME': 'demovie_high',
         'USER' : 'dm_admin',
         'PASSWORD': '123qwe!@#QWE', 
