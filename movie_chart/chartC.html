@@ -40,6 +40,7 @@
 		<ul class="nav menu">
 			<li ><a href="chartA.html"><em class="fa fa-bar-chart">&nbsp;</em> 인구밀도와 코로나 확진자</a></li>
 			<li ><a href="chartB.html"><em class="fa fa-bar-chart">&nbsp;</em> 요일별 코로나 확진자</a></li>
+			<li ><a href="chartC.html"><em class="fa fa-bar-chart">&nbsp;</em> 등급별 개봉일 관객수</a></li>
 			<li><a href="login.html" id="btn_logout"><em class="fa fa-power-off">&nbsp;</em> Logout</a></li>
 		</ul>
 	</div><!--/.sidebar-->
@@ -140,18 +141,16 @@
 		data = []
 		key = res[0].map(e => e.movie_code);
 
-		aBetween = res[0].sort((a, b) => a.avg_scrn_cnt - b.avg_scrn_cnt)
+		aBetween = res[0].sort((a, b) => a.open_audi_cnt - b.open_audi_cnt)
 		bBetween = res[1].sort((a, b) => a.tot_audi_cnt - b.tot_audi_cnt)
 
 		key.forEach(k => {
 
 			a = res[0].filter((e) => e.movie_code == k)
 			b = res[1].filter((e) => e.movie_code == k)
-			console.dir(a)
-			console.dir(b)
 
 			trace = {};
-			trace.x = [a[0].avg_scrn_cnt];
+			trace.x = [a[0].open_audi_cnt];
 			trace.y = [b[0].tot_audi_cnt];
 			trace.mode = 'markers',
 			trace.type = 'scatter',
@@ -165,7 +164,7 @@
 
 		var layout = {
 			xaxis: {
-				range: [ aBetween[0].avg_scrn_cnt, aBetween[aBetween.length-1].avg_scrn_cnt]
+				range: [ aBetween[0].open_audi_cnt, aBetween[aBetween.length-1].open_audi_cnt]
 			},
 			yaxis: {
 				range: [ bBetween[0].tot_audi_cnt, bBetween[aBetween.length-1].tot_audi_cnt]
@@ -204,14 +203,27 @@
 	const drawChar = (mode) => {
 
 		//start_date, end_date, token
-		
-		res1 = 'http://127.0.0.1/movie/movie_movie_scrn/'
+		res1 = 'http://127.0.0.1/movie/movie_movie_audi/'
 		res2 = 'http://127.0.0.1/movie/movie_moviehit/'
+		
+
 		getDataDouble(res1, res2)
 		.then(res => {
 			renderChart(res)
 		})
 		
+
+
+
+
+	
+
+
+
+
+
+
+
 	}
 
 	window.onload = function () {
