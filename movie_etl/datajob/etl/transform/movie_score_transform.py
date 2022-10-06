@@ -16,6 +16,7 @@ class MovieScoreTransformer:
         expe_score_list = []
         neti_score_list =[]
         std_date_list = []
+        code_list = []
 
         for i in range(len(movie_code_list)):
             path = '/movie/score/movie_score_' + \
@@ -24,6 +25,7 @@ class MovieScoreTransformer:
             mv_score_json = get_spark_session().read.json(path, encoding='UTF-8').first()
             mv_score_row = get_spark_session().createDataFrame(mv_score_json['data']).first()
             
+            code_list.append(mv_score_row.movie_code)
             audi_score_list.append(mv_score_row.audi_sc)
             expe_score_list.append(mv_score_row.expe_sc)
             neti_score_list.append(mv_score_row.neti_sc)
@@ -31,7 +33,7 @@ class MovieScoreTransformer:
             
 
         movie_score = pd.DataFrame({
-            'MOVIE_CODE':movie_code_list,
+            'MOVIE_CODE':code_list,
             'AUDI_SC':audi_score_list,
             'EXPE_SC':expe_score_list,
             'NETI_SC':neti_score_list,
