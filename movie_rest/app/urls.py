@@ -17,9 +17,32 @@ from django.contrib import admin
 from django.urls import path
 
 router = routers.DefaultRouter()
-# SAMPLE
-# router.register(r'corona/facility', rest_view.CoFacilityViewSet)
-# router.register(r'movie/movie_audi', rest_view.MovieAudiViewSet)
+
+
+router.register(r'movie/movie_actor', rest_view.MovieActorSerializers)
+
+router.register(r'movie/movie_company', rest_view.MovieCompanySerializers)
+
+router.register(r'movie/movie_genre', rest_view.MovieGenreSerializers)
+
+router.register(r'movie/movie_movie', rest_view.MovieMovieSerializers)
+
+router.register(r'movie/movie_movie_audi', rest_view.MovieMovieAudiSerializers)
+
+router.register(r'movie/movie_moviehit', rest_view.MovieMovieHitSerializers)
+
+router.register(r'movie/movie_movie_rank', rest_view.MovieMovieRankSerializers)
+
+router.register(r'movie/movie_movie_sales', rest_view.MovieMovieSalesSerializers)
+
+router.register(r'movie/movie_movie_score', rest_view.MovieMovieScoreSerializers)
+
+router.register(r'movie/movie_movie_scrn', rest_view.MovieMovieScrnSerializers)
+
+router.register(r'movie/movie_movie_search', rest_view.MovieMovieSearchSerializers)
+
+router.register(r'movie/movie_movie_show', rest_view.MovieMovieShowSerializers)
+
 
 
 urlpatterns = [

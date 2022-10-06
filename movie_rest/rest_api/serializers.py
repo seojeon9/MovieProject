@@ -1,8 +1,32 @@
 from rest_framework import serializers
+from rest_api.models import Actor, Company, Genre, Movie
 
-# SAMPLE
-# class CoFacilitySerializer(serializers.HyperlinkedModelSerializer):
+class MovieActorSerializers(serializers.HyperlinkedModelSerializer):
 
-#     class Meta:
-#         model = CoFacility
-#         fields = ['loc', 'fac_popu', 'qur_rate', 'std_day']
+    class Meta:
+        model = Actor
+        fields = ['actor_id', 'movie_code', 'movie_name', 'actor_name','hit_grade']
+
+
+class MovieCompanySerializers(serializers.HyperlinkedModelSerializer):
+
+    class Meta:
+        model = Company
+        fields = ['company_id', 'movie_code', 'company_name', 'company_type','hit_grade']
+
+
+class MovieGenreSerializers(serializers.HyperlinkedModelSerializer):
+
+    class Meta:
+        model = Genre
+        fields = ['genre_id', 'movie_code', 'genre_name', 'hit_grade']
+
+
+class MovieMovieSerializers(serializers.HyperlinkedModelSerializer):
+
+    class Meta:
+        model = Movie
+        fields = ['movie_code', 'movie_name', 'show_tm'
+                    ,'open_date','type_name','nation_name'
+                    ,'director','watch_grade_name','dist_name'
+                    ,'peak_yn','genre','hit_grade']
