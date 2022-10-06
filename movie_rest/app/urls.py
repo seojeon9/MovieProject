@@ -29,6 +29,36 @@ from drf_yasg.views import get_schema_view
 # router.register(r'movie/movie_actor', rest_view.MovieAudiViewSet)
 
 
+<<<<<<< HEAD
+router = routers.DefaultRouter()
+
+
+router.register(r'movie/movie_actor', rest_view.MovieActorSerializers)
+
+router.register(r'movie/movie_company', rest_view.MovieCompanySerializers)
+
+router.register(r'movie/movie_genre', rest_view.MovieGenreSerializers)
+
+router.register(r'movie/movie_movie', rest_view.MovieMovieSerializers)
+
+router.register(r'movie/movie_movie_audi', rest_view.MovieMovieAudiSerializers)
+
+router.register(r'movie/movie_moviehit', rest_view.MovieMovieHitSerializers)
+
+router.register(r'movie/movie_movie_rank', rest_view.MovieMovieRankSerializers)
+
+router.register(r'movie/movie_movie_sales', rest_view.MovieMovieSalesSerializers)
+
+router.register(r'movie/movie_movie_score', rest_view.MovieMovieScoreSerializers)
+
+router.register(r'movie/movie_movie_scrn', rest_view.MovieMovieScrnSerializers)
+
+router.register(r'movie/movie_movie_search', rest_view.MovieMovieSearchSerializers)
+
+router.register(r'movie/movie_movie_show', rest_view.MovieMovieShowSerializers)
+
+=======
+>>>>>>> 7f3deed1c6f48f6c4693305c8b300cc397a91a6c
 
 
 urlpatterns = [

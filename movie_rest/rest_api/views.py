@@ -32,11 +32,15 @@ def get_queryset_by_date(model, query_params):
     return queryset
 
 # SAMPLE
-# class CoFacilityViewSet(viewsets.ReadOnlyModelViewSet):
-#     queryset = CoFacility.objects.all().order_by('-std_day')
-#     serializer_class = CoFacilitySerializer
-#     permission_classes = [permissions.IsAuthenticated]
+class CoFacilityViewSet(viewsets.ReadOnlyModelViewSet):
+    queryset = Actor.objects.all()
+    serializer_class = MovieActorSerializers
+    permission_classes = [permissions.IsAuthenticated]
 
+<<<<<<< HEAD
+    @swagger_auto_schema(
+        operation_summary="인구밀도와 10만명당 코로나 발생 환자 간의 상관관계",
+=======
 #     @swagger_auto_schema(
 #         operation_summary="인구밀도와 10만명당 코로나 발생 환자 간의 상관관계",
 #         operation_description="""시작날짜와 끝날짜를 모두 생략하면 최근 1주일 데이터를 반환합니다. <br>
@@ -64,6 +68,7 @@ class MovieActorViewSet(viewsets.ReadOnlyModelViewSet):
 
     @swagger_auto_schema(
         operation_summary="영화코드 별 영화이름, 배우이름, 흥행등급 목록 반환",
+>>>>>>> 7f3deed1c6f48f6c4693305c8b300cc397a91a6c
         operation_description="""시작날짜와 끝날짜를 모두 생략하면 최근 1주일 데이터를 반환합니다. <br>
         시작날짜만 입력하면 시작날짜 이후의 데이터를 반환합니다.<br>
         끝날짜만 입력하면 끝날짜 이전 데이터를 반환합니다.<br>
@@ -77,6 +82,12 @@ class MovieActorViewSet(viewsets.ReadOnlyModelViewSet):
     )
     def list(self, request):
         query_params = request.query_params
+<<<<<<< HEAD
+        queryset = get_queryset_by_date(CoFacility, query_params)
+        print('params : >>>>>>>>>>>>>>>>>>>> ', query_params)
+        serializers = self.get_serializer(queryset, many=True)
+        return HttpResponse(serializers.data)
+=======
         queryset = get_queryset_by_date(Actor, query_params)
         print('params : >>>>>>>>>>>>>>>>>>>> ', query_params)
         serializers = self.get_serializer(queryset, many=True)
@@ -345,3 +356,4 @@ class MovieShowViewSet(viewsets.ReadOnlyModelViewSet):
         print('params : >>>>>>>>>>>>>>>>>>>> ', query_params)
         serializers = self.get_serializer(queryset, many=True)
         return HTTPResponse(serializers.data)
+>>>>>>> 7f3deed1c6f48f6c4693305c8b300cc397a91a6c
