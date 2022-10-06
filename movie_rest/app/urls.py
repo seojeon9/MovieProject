@@ -26,31 +26,30 @@ from . import views
 
 
 router = routers.DefaultRouter()
-router.register(r'movie/movie_actor', rest_view.MovieAudiViewSet)
 
-router.register(r'movie/movie_actor', rest_view.MovieActorSerializers)
+router.register(r'movie/movie_actor', rest_view.MovieActorViewSet)
 
-router.register(r'movie/movie_company', rest_view.MovieCompanySerializers)
+router.register(r'movie/movie_company', rest_view.MovieCompanyViewSet)
 
-router.register(r'movie/movie_genre', rest_view.MovieGenreSerializers)
+router.register(r'movie/movie_genre', rest_view.MovieGenreViewSet)
 
-router.register(r'movie/movie_movie', rest_view.MovieMovieSerializers)
+router.register(r'movie/movie_movie', rest_view.MovieViewSet)
 
-router.register(r'movie/movie_movie_audi', rest_view.MovieMovieAudiSerializers)
+router.register(r'movie/movie_movie_audi', rest_view.MovieAudiViewSet)
 
-router.register(r'movie/movie_moviehit', rest_view.MovieMovieHitSerializers)
+router.register(r'movie/movie_moviehit', rest_view.MovieHitViewSet)
 
-router.register(r'movie/movie_movie_rank', rest_view.MovieMovieRankSerializers)
+router.register(r'movie/movie_movie_rank', rest_view.MovieRankViewSet)
 
-router.register(r'movie/movie_movie_sales', rest_view.MovieMovieSalesSerializers)
+router.register(r'movie/movie_movie_sales', rest_view.MovieSalesViewSet)
 
-router.register(r'movie/movie_movie_score', rest_view.MovieMovieScoreSerializers)
+router.register(r'movie/movie_movie_score', rest_view.MovieScoreViewSet)
 
-router.register(r'movie/movie_movie_scrn', rest_view.MovieMovieScrnSerializers)
+router.register(r'movie/movie_movie_scrn', rest_view.MovieScrnViewSet)
 
-router.register(r'movie/movie_movie_search', rest_view.MovieMovieSearchSerializers)
+router.register(r'movie/movie_movie_search', rest_view.MovieSearchViewSet)
 
-router.register(r'movie/movie_movie_show', rest_view.MovieMovieShowSerializers)
+router.register(r'movie/movie_movie_show', rest_view.MovieShowViewSet)
 
 
 

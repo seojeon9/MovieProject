@@ -1035,3 +1035,5 @@ Traceback (most recent call last):
     <<<<<<< HEAD
     ^
 SyntaxError: invalid syntax
+[2022-10-06 07:10:45 +0000] [1221] [INFO] Parent changed, shutting down: <Worker 1221>
+[2022-10-06 07:10:45 +0000] [1221] [INFO] Worker exiting (pid: 1221)
