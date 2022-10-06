@@ -56,6 +56,10 @@ class MovieActorViewSet(viewsets.ReadOnlyModelViewSet):
         print('params : >>>>>>>>>>>>>>>>>>>> ', query_params)
         serializers = self.get_serializer(queryset, many=True)
         return JsonResponse(serializers.data, safe=False)
+    
+    @swagger_auto_schema(auto_schema=None)
+    def retrieve(self, request):
+        pass
 
 
 class MovieCompanyViewSet(viewsets.ReadOnlyModelViewSet):
@@ -79,6 +83,10 @@ class MovieCompanyViewSet(viewsets.ReadOnlyModelViewSet):
         serializers = self.get_serializer(queryset, many=True)
         return JsonResponse(serializers.data, safe=False)
 
+    @swagger_auto_schema(auto_schema=None)
+    def retrieve(self, request):
+        pass
+
 
 class MovieGenreViewSet(viewsets.ReadOnlyModelViewSet):
     queryset = Genre.objects.all()
@@ -100,6 +108,10 @@ class MovieGenreViewSet(viewsets.ReadOnlyModelViewSet):
         print('params : >>>>>>>>>>>>>>>>>>>> ', query_params)
         serializers = self.get_serializer(queryset, many=True)
         return JsonResponse(serializers.data, safe=False)
+
+    @swagger_auto_schema(auto_schema=None)
+    def retrieve(self, request):
+        pass
 
 
 class MovieViewSet(viewsets.ReadOnlyModelViewSet):
@@ -124,6 +136,10 @@ class MovieViewSet(viewsets.ReadOnlyModelViewSet):
         serializers = self.get_serializer(queryset, many=True)
         return JsonResponse(serializers.data, safe=False)
 
+    @swagger_auto_schema(auto_schema=None)
+    def retrieve(self, request):
+        pass
+
 
 class MovieAudiViewSet(viewsets.ReadOnlyModelViewSet):
     queryset = MovieAudi.objects.all()
@@ -147,7 +163,9 @@ class MovieAudiViewSet(viewsets.ReadOnlyModelViewSet):
         serializers = self.get_serializer(queryset, many=True)
         return JsonResponse(serializers.data, safe=False)
 
-        
+    @swagger_auto_schema(auto_schema=None)
+    def retrieve(self, request):
+        pass
 
 
 class MovieHitViewSet(viewsets.ReadOnlyModelViewSet):
@@ -171,6 +189,9 @@ class MovieHitViewSet(viewsets.ReadOnlyModelViewSet):
         serializers = self.get_serializer(queryset, many=True)
         return JsonResponse(serializers.data, safe=False)
 
+    @swagger_auto_schema(auto_schema=None)
+    def retrieve(self, request):
+        pass
 
 class MovieRankViewSet(viewsets.ReadOnlyModelViewSet):
     queryset = MovieRank.objects.all()
@@ -194,6 +215,9 @@ class MovieRankViewSet(viewsets.ReadOnlyModelViewSet):
         serializers = self.get_serializer(queryset, many=True)
         return JsonResponse(serializers.data, safe=False)
 
+    @swagger_auto_schema(auto_schema=None)
+    def retrieve(self, request):
+        pass
 
 class MovieSalesViewSet(viewsets.ReadOnlyModelViewSet):
     queryset = MovieSales.objects.all()
@@ -217,6 +241,9 @@ class MovieSalesViewSet(viewsets.ReadOnlyModelViewSet):
         serializers = self.get_serializer(queryset, many=True)
         return JsonResponse(serializers.data, safe=False)
 
+    @swagger_auto_schema(auto_schema=None)
+    def retrieve(self, request):
+        pass
 
 class MovieScoreViewSet(viewsets.ReadOnlyModelViewSet):
     queryset = MovieScore.objects.all()
@@ -240,6 +267,9 @@ class MovieScoreViewSet(viewsets.ReadOnlyModelViewSet):
         serializers = self.get_serializer(queryset, many=True)
         return JsonResponse(serializers.data, safe=False)
 
+    @swagger_auto_schema(auto_schema=None)
+    def retrieve(self, request):
+        pass
 
 class MovieScrnViewSet(viewsets.ReadOnlyModelViewSet):
     queryset = MovieScrn.objects.all()
@@ -292,6 +322,9 @@ class MovieSearchViewSet(viewsets.ReadOnlyModelViewSet):
         serializers = self.get_serializer(queryset, many=True)
         return JsonResponse(serializers.data, safe=False)
 
+    @swagger_auto_schema(auto_schema=None)
+    def retrieve(self, request):
+        pass
 
 class MovieShowViewSet(viewsets.ReadOnlyModelViewSet):
     queryset = MovieShow.objects.all()
@@ -314,3 +347,7 @@ class MovieShowViewSet(viewsets.ReadOnlyModelViewSet):
         print('params : >>>>>>>>>>>>>>>>>>>> ', query_params)
         serializers = self.get_serializer(queryset, many=True)
         return JsonResponse(serializers.data, safe=False)
+
+    @swagger_auto_schema(auto_schema=None)
+    def retrieve(self, request):
+        pass
