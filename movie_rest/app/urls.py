@@ -16,8 +16,10 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 
-router = routers.DefaultRouter()
-# router.register(r'movie/movie_audi', rest_view.MovieAudiViewSet)
+# router = routers.DefaultRouter()
+# router.register(r'movie/movie_actor', rest_view.MovieAudiViewSet)
+
+
 
 
 urlpatterns = [
