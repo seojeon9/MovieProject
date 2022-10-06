@@ -43,9 +43,7 @@ class MovieShow:
     def __select_open_show_df(cls, movie_box_office, movie_detail):
         movie_detail_open_show_df = movie_detail.join(
             movie_box_office, on=['MOVIE_CODE', 'MOVIE_NAME'], how='left')
-        # movie_detail_open_show = movie_detail_open_show.select('MOVIE_CODE','MOVIE_NAME','SHOW_CNT')\
-        #     .where(movie_detail_open_show.OPEN_DATE == movie_detail_open_show.STD_DATE)
         select_open_show_df = movie_detail_open_show_df.select('MOVIE_CODE', 'MOVIE_NAME', movie_detail_open_show_df.SHOW_CNT.alias('OPEN_SHOW_CNT'))\
-            .where(movie_detail_open_show_df.STD_DATE == '20220801')
+            .where(movie_detail_open_show_df.OPEN_DATE == movie_detail_open_show_df.STD_DATE)
 
         return select_open_show_df
