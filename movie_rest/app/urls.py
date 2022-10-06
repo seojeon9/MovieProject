@@ -28,11 +28,6 @@ from . import views
 router = routers.DefaultRouter()
 router.register(r'movie/movie_actor', rest_view.MovieAudiViewSet)
 
-
-<<<<<<< HEAD
-router = routers.DefaultRouter()
-
-
 router.register(r'movie/movie_actor', rest_view.MovieActorSerializers)
 
 router.register(r'movie/movie_company', rest_view.MovieCompanySerializers)
@@ -57,8 +52,6 @@ router.register(r'movie/movie_movie_search', rest_view.MovieMovieSearchSerialize
 
 router.register(r'movie/movie_movie_show', rest_view.MovieMovieShowSerializers)
 
-=======
->>>>>>> 7f3deed1c6f48f6c4693305c8b300cc397a91a6c
 
 
 # urlpatterns = [
