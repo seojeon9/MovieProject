@@ -20,11 +20,11 @@ class MovieHit:
         select_max_df = select_df.groupby(select_df.MOVIE_CODE, select_df.MOVIE_NAME).agg({'AUDI_ACC' :'max'})
         select_max_df = select_max_df.withColumnRenamed('max(AUDI_ACC)', 'TOT_AUDI_CNT')
 
-        cdf = select_max_df.withColumn('HIT_GRADE', when(select_max_df.TOT_AUDI_CNT > 7000000, 'S')
-                                                   .when(select_max_df.TOT_AUDI_CNT > 4000000, 'A')
-                                                   .when(select_max_df.TOT_AUDI_CNT > 1500000, 'C')
-                                                   .when(select_max_df.TOT_AUDI_CNT > 400000, 'D')
-                                                   .when(select_max_df.TOT_AUDI_CNT > 150000, 'E')
+        cdf = select_max_df.withColumn('HIT_GRADE', when(select_max_df.TOT_AUDI_CNT > 2500000, 'A')
+                                                   .when(select_max_df.TOT_AUDI_CNT > 1000000, 'B')
+                                                   .when(select_max_df.TOT_AUDI_CNT > 500000, 'C')
+                                                   .when(select_max_df.TOT_AUDI_CNT > 150000, 'D')
+                                                   .when(select_max_df.TOT_AUDI_CNT > 50000, 'E')
                                                    .otherwise('F'))
 
         movie_hit_df = cdf.select(cdf.MOVIE_CODE, cdf.MOVIE_NAME, cdf.TOT_AUDI_CNT, cdf.HIT_GRADE)

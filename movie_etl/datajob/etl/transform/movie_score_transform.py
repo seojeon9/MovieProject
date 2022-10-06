@@ -6,7 +6,7 @@ import pandas as pd
 
 class MovieScoreTransformer:
     @classmethod
-    def transform(cls):
+    def transform(cls): 
         movie_url_df = find_data(DataWarehouse, 'MOVIE_URL')
         movie_url_df = movie_url_df.drop_duplicates(['MOVIE_CODE'])
         dw_movie_score_df = find_data(DataWarehouse, 'MOVIE_SCORE').drop('MS_ID')
@@ -19,17 +19,20 @@ class MovieScoreTransformer:
         code_list = []
 
         for i in range(len(movie_code_list)):
-            path = '/movie/score/movie_score_' + \
-                movie_code_list[i] + '_' + \
-                cal_std_day(0) + '.json'
-            mv_score_json = get_spark_session().read.json(path, encoding='UTF-8').first()
-            mv_score_row = get_spark_session().createDataFrame(mv_score_json['data']).first()
-            
-            code_list.append(mv_score_row.movie_code)
-            audi_score_list.append(mv_score_row.audi_sc)
-            expe_score_list.append(mv_score_row.expe_sc)
-            neti_score_list.append(mv_score_row.neti_sc)
-            std_date_list.append(mv_score_row.std_date)
+            try : 
+                path = '/movie/score/movie_score_' + \
+                    movie_code_list[i] + '_' + \
+                    cal_std_day(0) + '.json'
+                mv_score_json = get_spark_session().read.json(path, encoding='UTF-8').first()
+                mv_score_row = get_spark_session().createDataFrame(mv_score_json['data']).first()
+                
+                code_list.append(mv_score_row.movie_code)
+                audi_score_list.append(mv_score_row.audi_sc)
+                expe_score_list.append(mv_score_row.expe_sc)
+                neti_score_list.append(mv_score_row.neti_sc)
+                std_date_list.append(mv_score_row.std_date)
+            except :
+                print('error')
             
 
         movie_score = pd.DataFrame({

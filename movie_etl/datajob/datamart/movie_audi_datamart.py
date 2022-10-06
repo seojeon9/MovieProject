@@ -47,8 +47,7 @@ class MovieAudi:
         sec_date_audi_df = sec_date_df.join(
             movie_box_office, on='MOVIE_CODE', how='left')
         sec_audi_df = sec_date_audi_df.select('MOVIE_CODE', sec_date_audi_df.AUDI_CNT.alias('SEC_AUDI_CNT'))\
-            .where(sec_date_audi_df.STD_DATE == '20220802')
-        # .where(sec_date_audi_df.STD_DATE == sec_date_audi_df.SEC_DATE)
+            .where(sec_date_audi_df.STD_DATE == sec_date_audi_df.SEC_DATE)
         return sec_audi_df
 
     @classmethod
@@ -63,6 +62,5 @@ class MovieAudi:
         movie_detail_open_audi_df = movie_detail.join(
             movie_box_office, on=['MOVIE_CODE', 'MOVIE_NAME'], how='left')
         open_audi_df = movie_detail_open_audi_df.select('MOVIE_CODE', 'MOVIE_NAME', movie_detail_open_audi_df.AUDI_CNT.alias('OPEN_AUDI_CNT'), to_date(movie_detail_open_audi_df.STD_DATE, 'yyyyMMdd').alias('STD_DATE'))\
-            .where(movie_detail_open_audi_df.STD_DATE == '20220801')
-        # .where(movie_detail_open_show.OPEN_DATE == movie_detail_open_show.STD_DATE)
+            .where(movie_detail_open_audi_df.OPEN_DATE == movie_detail_open_audi_df.STD_DATE)
         return open_audi_df

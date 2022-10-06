@@ -25,12 +25,12 @@ class MovieRank:
 
         # 개봉일의 랭킹
         std_open = box_detail.select('MOVIE_CODE', 'MOVIE_NAME', box_detail.RANK.alias('FIRST_RANK')) \
-                        .where(box_detail.STD_DATE == '20220801') # 후에 box_detail.OPEN_DATE 로 변경
+                        .where(box_detail.STD_DATE == box_detail.OPEN_DATE) # 후에 box_detail.OPEN_DATE 로 변경
         # std_open.show()
 
         # 개봉 2주차의 랭킹(개봉일 +7일)
         std_second = box_detail.select('MOVIE_CODE', 'MOVIE_NAME', box_detail.RANK.alias('SECOND_RANK')) \
-                        .where(box_detail.STD_DATE == '20220802') # 후에 box_detail.OPEN_DATE+7 로 변경
+                        .where(box_detail.STD_DATE == box_detail.OPEN_DATE+7) # 후에 box_detail.OPEN_DATE+7 로 변경
         # std_second.show()
 
         # 개봉일과 개봉 2주차 랭킹 join
