@@ -51,7 +51,7 @@
 		username = document.querySelector('#username').value;
 		password = document.querySelector('#password').value;
 
-		postData('http://127.0.0.1:8000/account/login_bi/', {"username": username, "password": password})
+		postData('http://127.0.0.1/accounts/login_bi/', {"username": username, "password": password})
 		.then((response) => {
 			console.dir(response)
 			if(!response.is_success)

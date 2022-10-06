@@ -53,10 +53,11 @@ class MovieActorViewSet(viewsets.ReadOnlyModelViewSet):
     )
     def list(self, request):
         query_params = request.query_params
-        queryset = get_queryset_by_date(Actor, query_params)
+        movie_parm = query_params['movie_name']
+        queryset = Actor.objects.filter(movie_name__contains=movie_parm)
         print('params : >>>>>>>>>>>>>>>>>>>> ', query_params)
         serializers = self.get_serializer(queryset, many=True)
-        return HTTPResponse(serializers.data)
+        return JsonResponse(serializers.data, safe=False)
 
 
 class MovieCompanyViewSet(viewsets.ReadOnlyModelViewSet):
@@ -173,10 +174,10 @@ class MovieHitViewSet(viewsets.ReadOnlyModelViewSet):
     )
     def list(self, request):
         query_params = request.query_params
-        queryset = get_queryset_by_date(MovieHit, query_params)
+        queryset = MovieHit.objects.filter(hit_grade__contains = query_params['hit_grade'] )
         print('params : >>>>>>>>>>>>>>>>>>>> ', query_params)
         serializers = self.get_serializer(queryset, many=True)
-        return HTTPResponse(serializers.data)
+        return JsonResponse(serializers.data, safe=False)
 
 
 class MovieRankViewSet(viewsets.ReadOnlyModelViewSet):
@@ -269,10 +270,15 @@ class MovieScrnViewSet(viewsets.ReadOnlyModelViewSet):
     )
     def list(self, request):
         query_params = request.query_params
-        queryset = get_queryset_by_date(MovieScrn, query_params)
+        queryset = MovieScrn.objects.filter(hit_grade__contains = query_params['hit_grade'] )
         print('params : >>>>>>>>>>>>>>>>>>>> ', query_params)
         serializers = self.get_serializer(queryset, many=True)
-        return HTTPResponse(serializers.data)
+        return JsonResponse(serializers.data, safe=False)
+
+    @swagger_auto_schema(auto_schema=None)
+    def retrieve(self, request):
+        pass
+
 
 
 class MovieSearchViewSet(viewsets.ReadOnlyModelViewSet):
