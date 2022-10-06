@@ -150,7 +150,7 @@ class MovieAudiViewSet(viewsets.ReadOnlyModelViewSet):
     )
     def list(self, request):
         query_params = request.query_params
-        queryset = get_queryset_by_date(MovieAudi, query_params)
+        queryset = MovieAudi.objects.filter(hit_grade__contains = query_params['hit_grade'] )
         print('params : >>>>>>>>>>>>>>>>>>>> ', query_params)
         serializers = self.get_serializer(queryset, many=True)
         return JsonResponse(serializers.data)
@@ -246,7 +246,7 @@ class MovieScoreViewSet(viewsets.ReadOnlyModelViewSet):
     )
     def list(self, request):
         query_params = request.query_params
-        queryset = get_queryset_by_date(MovieScore, query_params)
+        queryset = MovieScore.objects.filter(hit_grade__contains = query_params['hit_grade'] )
         print('params : >>>>>>>>>>>>>>>>>>>> ', query_params)
         serializers = self.get_serializer(queryset, many=True)
         return JsonResponse(serializers.data)
@@ -323,7 +323,7 @@ class MovieShowViewSet(viewsets.ReadOnlyModelViewSet):
     )
     def list(self, request):
         query_params = request.query_params
-        queryset = get_queryset_by_date(MovieShow, query_params)
+        queryset = MovieShow.objects.filter(hit_grade__contains = query_params['hit_grade'] )
         print('params : >>>>>>>>>>>>>>>>>>>> ', query_params)
         serializers = self.get_serializer(queryset, many=True)
         return JsonResponse(serializers.data)

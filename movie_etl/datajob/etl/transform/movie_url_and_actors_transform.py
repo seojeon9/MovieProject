@@ -12,10 +12,13 @@ class MovieUrlAndActorsTransformer:
         movie_codes, movie_names = get_movie_codes()
 
         for movie_code in movie_codes:
-            movie = cls.__load_json(movie_code)
-            items = cls.__create_dataframe(movie)
-            cls.__save_actors(movie_code, items)
-            cls.__save_link(movie_code, items)
+            try : 
+                movie = cls.__load_json(movie_code)
+                items = cls.__create_dataframe(movie)
+                cls.__save_actors(movie_code, items)
+                cls.__save_link(movie_code, items)
+            except :
+                print('empty dataset')
 
     @classmethod
     def __save_link(cls, movie_code, items):

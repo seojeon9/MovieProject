@@ -36,41 +36,41 @@ class NaverDatalabApiExtractor:
             start_date = cls.open_dates[i]
 
             print(start_date)
-
-            date = datetime.strptime(start_date, '%Y%m%d')
-            start_date = date.strftime("%Y-%m-%d")
-            end_date = date + timedelta(weeks=15)
-
-            if end_date > datetime.now():
-                end_date = datetime.now()
-
-            end_date = end_date.strftime("%Y-%m-%d")
-            time_unit = 'week'  # date, week, month
-            name = cls.movie_names[i]
-            keword = name.split(':')[0]
-
-            # body = "{\"startDate\":\"2022-09-01\",\"endDate\":\"2022-09-28\",\"timeUnit\":\"week\",\"keywordGroups\":[{\"groupName\":\"공조2: 인터내셔날\",\"keywords\":[\"공조2: 인터내셔날\",\"공조2\"]}]}"
-            body = '{\"startDate\":\"' + start_date + '\",\"endDate\":\"' + end_date + '\",\"timeUnit\":\"' + \
-                time_unit + \
-                '\",\"keywordGroups\":[{\"groupName\":\"' + \
-                name + '\",\"keywords\":[\"' + \
-                name + '\",\"' + keword + '\"]}]}'
-
-            print(body)
-
-            params = {
-                'body': body
-            }
-
-            request = urllib.request.Request(cls.URL)
-            request.add_header("X-Naver-Client-Id", cls.CLIENT_ID)
-            request.add_header("X-Naver-Client-Secret", cls.CLIENT_KEY)
-            request.add_header("Content-Type", "application/json")
-            response = urllib.request.urlopen(
-                request, data=body.encode("utf-8"))
-            rescode = response.getcode()
-
             try:
+                date = datetime.strptime(start_date, '%Y%m%d')
+                start_date = date.strftime("%Y-%m-%d")
+                end_date = date + timedelta(weeks=15)
+
+                if end_date > datetime.now():
+                    end_date = datetime.now()
+
+                end_date = end_date.strftime("%Y-%m-%d")
+                time_unit = 'week'  # date, week, month
+                name = cls.movie_names[i]
+                keword = name.split(':')[0]
+
+                # body = "{\"startDate\":\"2022-09-01\",\"endDate\":\"2022-09-28\",\"timeUnit\":\"week\",\"keywordGroups\":[{\"groupName\":\"공조2: 인터내셔날\",\"keywords\":[\"공조2: 인터내셔날\",\"공조2\"]}]}"
+                body = '{\"startDate\":\"' + start_date + '\",\"endDate\":\"' + end_date + '\",\"timeUnit\":\"' + \
+                    time_unit + \
+                    '\",\"keywordGroups\":[{\"groupName\":\"' + \
+                    name + '\",\"keywords\":[\"' + \
+                    name + '\",\"' + keword + '\"]}]}'
+
+                print(body)
+
+                params = {
+                    'body': body
+                }
+
+                request = urllib.request.Request(cls.URL)
+                request.add_header("X-Naver-Client-Id", cls.CLIENT_ID)
+                request.add_header("X-Naver-Client-Secret", cls.CLIENT_KEY)
+                request.add_header("Content-Type", "application/json")
+            
+                response = urllib.request.urlopen(
+                request, data=body.encode("utf-8"))
+                rescode = response.getcode()
+            
                 if (rescode == 200):
                     response_body = response.read()
                     res = response_body.decode('utf-8')
@@ -81,9 +81,9 @@ class NaverDatalabApiExtractor:
                     print("Error Code:" + rescode)
             except Exception as e:
                 print('예외발생 : ', e)
-                log_dict = cls.__create_log_dict(params)
-                cls.__dump_log(log_dict, e)
-                raise e
+                # log_dict = cls.__create_log_dict(params)
+                # cls.__dump_log(log_dict, e)
+                # raise e
 
     @classmethod
     def __upload_to_hdfs(cls, file_name, res):
