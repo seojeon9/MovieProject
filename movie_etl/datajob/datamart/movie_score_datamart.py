@@ -15,7 +15,7 @@ class MovieScore:
                                     ,score_join.MOVIE_NAME
                                     ,score_join.EXPE_SC.alias('EXPE_SCORE').cast('float')
                                     ,score_join.AUDI_SC.alias('AUDI_SCORE').cast('float')
-                                    ,score_join.NETI_SC.alias('NETI_SOCRE').cast('float')
+                                    ,score_join.NETI_SC.alias('NETI_SCORE').cast('float')
                                     ,score_join.HIT_GRADE)
 
         save_data(DataMart, movie_score, 'MOVIE_SCORE')

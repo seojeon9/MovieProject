@@ -1,12 +1,12 @@
 from multiprocessing import get_logger
 import json
 from infra.hdfs_client import get_client
-from infra.util import cal_std_day, execute_rest_api
+from infra.util import cal_std_day, cal_std_day_yyyymmdd, execute_rest_api
 
 
 class DailyBoxofficeExtractor:
     URL = 'http://www.kobis.or.kr/kobisopenapi/webservice/rest/boxoffice/searchDailyBoxOfficeList.json'
-    SERVICE_KEY = '3ad2d800ada4ee67f4d049b66e903680'
+    SERVICE_KEY = '6f2b465b25f40650abb3330460e110c2'
     FILE_DIR = '/movie/daily_box_office/'
 
     @classmethod
@@ -30,7 +30,7 @@ class DailyBoxofficeExtractor:
     def __create_param(cls, befor_day):
         return {
             'key': cls.SERVICE_KEY,
-            'targetDt': cal_std_day(befor_day)
+            'targetDt': cal_std_day_yyyymmdd(befor_day)
         }
 
     @classmethod
@@ -56,5 +56,5 @@ class DailyBoxofficeExtractor:
     @classmethod
     def __date_string(cls, date):
         date_list = str(date).split()[0].split('-')
-        date_str = date_list[0]+date_list[1]+date_list[2]
+        date_str = date_list[0] + '-' + date_list[1] + '-' + date_list[2]
         return date_str

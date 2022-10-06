@@ -18,9 +18,9 @@ class MovieScoreTransformer:
         std_date_list = []
 
         for i in range(len(movie_code_list)):
-            path = '/movie_data/score/movie_score_' + \
+            path = '/movie/score/movie_score_' + \
                 movie_code_list[i] + '_' + \
-                cal_std_day(1) + '.json'
+                cal_std_day(0) + '.json'
             mv_score_json = get_spark_session().read.json(path, encoding='UTF-8').first()
             mv_score_row = get_spark_session().createDataFrame(mv_score_json['data']).first()
             
@@ -39,6 +39,6 @@ class MovieScoreTransformer:
         })
 
         movie_score_df = get_spark_session().createDataFrame(movie_score)
-        movie_score_sub = dw_movie_score_df.subtract(movie_score_df)
+        movie_score_sub = movie_score_df.subtract(dw_movie_score_df)
         
         save_data(DataWarehouse, movie_score_sub, 'MOVIE_SCORE')
