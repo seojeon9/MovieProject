@@ -15,6 +15,15 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
+from django.urls import include, path
+from django.conf.urls.static import static
+from django.conf import settings
+from rest_framework import routers
+from rest_api import views as rest_view
+from drf_yasg import openapi
+from drf_yasg.views import get_schema_view
+# from . import views
+
 
 # router = routers.DefaultRouter()
 # router.register(r'movie/movie_actor', rest_view.MovieAudiViewSet)
