@@ -1,3 +1,4 @@
+import time
 from bs4 import BeautifulSoup
 import requests
 from datetime import datetime
@@ -10,58 +11,62 @@ class MovieScoreExtractor:
     file_dir = '/movie/score/'
     cols = ['movie_code', 'title','audi_sc', 'expe_sc', 'neti_sc', 'std_date']
 
-    
-
     @classmethod
     def extract_data(cls):
         
         movie_url_df = find_data(DataWarehouse, 'MOVIE_URL')
-        movie_url_df = movie_url_df.drop_duplicates(['MOVIE_CODE'])
-        movie_code_list = movie_url_df.select('MOVIE_CODE').rdd.flatMap(lambda x: x).collect()
-        print(len(movie_code_list))
-        movie_url_list = movie_url_df.select('URL').rdd.flatMap(lambda x: x).collect()
-        print(len(movie_url_list))
+        movie_url_df = movie_url_df.toPandas()
 
-        for i in range(len(movie_code_list)):
+        print(movie_url_df['MOVIE_CODE'])
+        for i in range(len(movie_url_df['MOVIE_CODE'])):
             data=[]
-            file_name = 'movie_score_' + str(movie_code_list[i]) + '_' + cls.std_date + '.json'
-            url = movie_url_list[i]
+            file_name = 'movie_score_' + str(movie_url_df['MOVIE_CODE'][i]) + '_' + cls.std_date + '.json'
+            url = movie_url_df['URL'][i]
             html = requests.get(url).content
             soup = BeautifulSoup(html,"html.parser")
-            # print(soup)
 
             rows=[]
-            rows.append(movie_code_list[i])
+            rows.append(movie_url_df['MOVIE_CODE'][i])
 
             try :
                 title=soup.findAll("h3",{"class":"h_movie"})[0].text.split('\n')[1]
+                time.sleep(2)
                 rows.append(title)
             except Exception as e:
                 rows.append('없음')
                 
                 
             try :
-                audi_sc=soup.findAll("span",{"class":"st_on"})[0].text.split(" ")[2].replace('점',"")
+                audi_sc=soup.findAll("span",{"class":"st_on"})
+                time.sleep(1)
+                audi_sc=audi_sc[0].text.split(" ")[2].replace('점',"")
+                time.sleep(2)
                 rows.append(audi_sc)
             except Exception as e:
                 rows.append('없음')
                 
                 
             try :
-                expe_sc=soup.findAll("div",{"class":"spc_score_area"})[0].text.split("\n\n")[2]
+                expe_sc=soup.findAll("div",{"class":"spc_score_area"})
+                time.sleep(1)
+                expe_sc=expe_sc[0].text.split("\n\n")[2]
+                time.sleep(2)
                 rows.append(expe_sc)
             except Exception as e:
                 rows.append('없음')
             
             
             try :
-                neti_sc=soup.findAll("a",{"id":"pointNetizenPersentBasic"})[0].text
+                neti_sc=soup.findAll("a",{"id":"pointNetizenPersentBasic"})
+                time.sleep(1)
+                neti_sc=neti_sc[0].text
+                time.sleep(2)
                 rows.append(neti_sc)
             except Exception as e:
                 rows.append('없음')
             
             rows.append(cls.std_date)
-            print(rows)
+            
             tmp = dict(zip(cls.cols, rows))
             data.append(tmp)
 
@@ -81,4 +86,3 @@ class MovieScoreExtractor:
             }
 
             get_client().write(cls.file_dir+file_name, json.dumps(res, ensure_ascii=False), encoding='utf-8', overwrite=True)
-

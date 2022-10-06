@@ -7,10 +7,7 @@ class MovieScore:
         hit = find_data(DataMart, 'MOVIE_HIT')
 
         score_join = score.join(hit, on='MOVIE_CODE')
-        score_join = score_join.replace('없음','-1')
-
-        score_join.show()
-
+        score_join = score_join.select('*').where(score_join.AUDI_SC!='없음').where(score_join.EXPE_SC!='없음').where(score_join.NETI_SC!='없음')
         movie_score = score_join.select(score_join.MOVIE_CODE
                                     ,score_join.MOVIE_NAME
                                     ,score_join.EXPE_SC.alias('EXPE_SCORE').cast('float')
