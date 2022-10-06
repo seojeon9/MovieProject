@@ -40,6 +40,7 @@
 		<ul class="nav menu">
 			<li ><a href="chartA.html"><em class="fa fa-bar-chart">&nbsp;</em> 인구밀도와 코로나 확진자</a></li>
 			<li ><a href="chartB.html"><em class="fa fa-bar-chart">&nbsp;</em> 요일별 코로나 확진자</a></li>
+			<li ><a href="chartSales.html"><em class="fa fa-bar-chart">&nbsp;</em> 관객수 개봉일 매출액점유율 총관객수의 상관관계</a></li>
 			<li><a href="login.html" id="btn_logout"><em class="fa fa-power-off">&nbsp;</em> Logout</a></li>
 		</ul>
 	</div><!--/.sidebar-->
@@ -138,20 +139,18 @@
 	const renderChart = (res) => {
 
 		data = []
-		key = res[0].map(e => e.movie_code);
+		key = res[0].map(e => e.movie_name);
 
-		aBetween = res[0].sort((a, b) => a.avg_scrn_cnt - b.avg_scrn_cnt)
+		aBetween = res[0].sort((a, b) => a.open_sales_share - b.open_sales_share)
 		bBetween = res[1].sort((a, b) => a.tot_audi_cnt - b.tot_audi_cnt)
 
 		key.forEach(k => {
 
-			a = res[0].filter((e) => e.movie_code == k)
-			b = res[1].filter((e) => e.movie_code == k)
-			console.dir(a)
-			console.dir(b)
+			a = res[0].filter((e) => e.movie_name == k)
+			b = res[1].filter((e) => e.movie_name == k)
 
 			trace = {};
-			trace.x = [a[0].avg_scrn_cnt];
+			trace.x = [a[0].open_sales_share];
 			trace.y = [b[0].tot_audi_cnt];
 			trace.mode = 'markers',
 			trace.type = 'scatter',
@@ -163,19 +162,21 @@
 		})
 
 
-		
+		var layout = {
+			
+
+			title:'관객수 개봉일 매출액과 총관객수의 상관관계'
+		};
 
 
 		console.dir(data)
 
-		Plotly.newPlot('chart', data);
+		Plotly.newPlot('chart', data, layout);
 	}
 
 
 	async function getDataDouble(url1, url2){
 
-		movie_grade = document.querySelector('#movie_grade').value;
-		
 		res1 = await getData(url1, 
 				{'hit_grade':movie_grade},
 				{'Content-Type': 'application/json'
@@ -195,14 +196,18 @@
 	const drawChar = (mode) => {
 
 		//start_date, end_date, token
-		
-		res1 = 'http://127.0.0.1/movie/movie_movie_scrn/'
-		res2 = 'http://127.0.0.1/movie/movie_moviehit/'
-		getDataDouble(res1, res2)
+		movie_grade = document.querySelector('#movie_grade').value;
+
+		url1 = 'http://127.0.0.1/movie/movie_movie_sales/'
+		url2 = 'http://127.0.0.1/movie/movie_moviehit/'
+
+
+		getDataDouble(url1, url2)
 		.then(res => {
 			renderChart(res)
 		})
-		
+
+
 	}
 
 	window.onload = function () {
