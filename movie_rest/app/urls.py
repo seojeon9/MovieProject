@@ -22,16 +22,33 @@ from rest_framework import routers
 from rest_api import views as rest_view
 from drf_yasg import openapi
 from drf_yasg.views import get_schema_view
-# from . import views
+from . import views
 
 
-# router = routers.DefaultRouter()
-# router.register(r'movie/movie_actor', rest_view.MovieAudiViewSet)
+router = routers.DefaultRouter()
+router.register(r'movie/movie_actor', rest_view.MovieAudiViewSet)
 
 
+
+
+# urlpatterns = [
+#     # path('admin/', admin.site.urls),
+#     path('', include(router.urls)),
+# ]
+
+schema_view = get_schema_view(
+    openapi.Info(
+        title="CORONA_API",
+        default_version='v2',
+        description="CORONA_API description",
+    ),
+    public=True,
+)
 
 
 urlpatterns = [
-    # path('admin/', admin.site.urls),
+    path('', views.index),
     path('', include(router.urls)),
+    path('accounts/', include('account.urls')),
+    path('doc/', schema_view.with_ui('swagger', cache_timeout=0), name='doc'),
 ]

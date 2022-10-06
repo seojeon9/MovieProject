@@ -5,8 +5,8 @@ from rest_framework import viewsets, permissions
 from rest_api.models import *
 from rest_api.serializers import *
 from django.http import *
-# from drf_yasg.utils import swagger_auto_schema
-# from drf_yasg.openapi import Parameter, IN_QUERY, TYPE_STRING
+from drf_yasg.utils import swagger_auto_schema
+from drf_yasg.openapi import Parameter, IN_QUERY, TYPE_STRING
 
 
 # Create your views here.
@@ -90,7 +90,7 @@ class MovieCompanyViewSet(viewsets.ReadOnlyModelViewSet):
 
     @swagger_auto_schema(
         operation_summary="영화코드 별 영화사이름, 영화사종류, 흥행등급 목록 반환",
-        operation_description=" "
+        operation_description=" ",
 
         manual_parameters=[
             Parameter("start_date", IN_QUERY, type=TYPE_STRING,
@@ -114,7 +114,7 @@ class MovieGenreViewSet(viewsets.ReadOnlyModelViewSet):
 
     @swagger_auto_schema(
         operation_summary="영화코드 별 장르이름, 흥행등급 목록 반환",
-        operation_description=" "
+        operation_description=" ",
 
         manual_parameters=[
             Parameter("start_date", IN_QUERY, type=TYPE_STRING,
@@ -138,7 +138,7 @@ class MovieViewSet(viewsets.ReadOnlyModelViewSet):
 
     @swagger_auto_schema(
         operation_summary=" ",
-        operation_description=" "
+        operation_description=" ",
 
         manual_parameters=[
             Parameter("start_date", IN_QUERY, type=TYPE_STRING,
@@ -162,7 +162,7 @@ class MovieAudiViewSet(viewsets.ReadOnlyModelViewSet):
 
     @swagger_auto_schema(
         operation_summary=" ",
-        operation_description=" "
+        operation_description=" ",
 
         manual_parameters=[
             Parameter("start_date", IN_QUERY, type=TYPE_STRING,
@@ -186,7 +186,7 @@ class MovieHitViewSet(viewsets.ReadOnlyModelViewSet):
 
     @swagger_auto_schema(
         operation_summary=" ",
-        operation_description=" "
+        operation_description=" ",
 
         manual_parameters=[
             Parameter("start_date", IN_QUERY, type=TYPE_STRING,
@@ -210,7 +210,7 @@ class MovieRankViewSet(viewsets.ReadOnlyModelViewSet):
 
     @swagger_auto_schema(
         operation_summary=" ",
-        operation_description=" "
+        operation_description=" ",
 
         manual_parameters=[
             Parameter("start_date", IN_QUERY, type=TYPE_STRING,
@@ -234,7 +234,7 @@ class MovieSalesViewSet(viewsets.ReadOnlyModelViewSet):
 
     @swagger_auto_schema(
         operation_summary=" ",
-        operation_description=" "
+        operation_description=" ",
 
         manual_parameters=[
             Parameter("start_date", IN_QUERY, type=TYPE_STRING,
@@ -258,7 +258,7 @@ class MovieScoreViewSet(viewsets.ReadOnlyModelViewSet):
 
     @swagger_auto_schema(
         operation_summary=" ",
-        operation_description=" "
+        operation_description=" ",
 
         manual_parameters=[
             Parameter("start_date", IN_QUERY, type=TYPE_STRING,
@@ -282,7 +282,7 @@ class MovieScrnViewSet(viewsets.ReadOnlyModelViewSet):
 
     @swagger_auto_schema(
         operation_summary=" ",
-        operation_description=" "
+        operation_description=" ",
 
         manual_parameters=[
             Parameter("start_date", IN_QUERY, type=TYPE_STRING,
@@ -306,7 +306,7 @@ class MovieSearchViewSet(viewsets.ReadOnlyModelViewSet):
 
     @swagger_auto_schema(
         operation_summary=" ",
-        operation_description=" "
+        operation_description=" ",
 
         manual_parameters=[
             Parameter("start_date", IN_QUERY, type=TYPE_STRING,
@@ -330,7 +330,7 @@ class MovieShowViewSet(viewsets.ReadOnlyModelViewSet):
 
     @swagger_auto_schema(
         operation_summary=" ",
-        operation_description=" "
+        operation_description=" ",
 
         manual_parameters=[
             Parameter("start_date", IN_QUERY, type=TYPE_STRING,
