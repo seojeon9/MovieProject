@@ -93,7 +93,7 @@ class MovieGenreViewSet(viewsets.ReadOnlyModelViewSet):
         operation_summary="영화코드 별 장르이름, 흥행등급 목록 반환",
         operation_description=" ",
         manual_parameters=[
-            Parameter("genre", IN_QUERY, type=TYPE_STRING,
+            Parameter("genre_name", IN_QUERY, type=TYPE_STRING,
                       description="장르, (required : False)", required=False),
         ],
     )
@@ -118,8 +118,8 @@ class MovieViewSet(viewsets.ReadOnlyModelViewSet):
         operation_summary="영화 별 상영시간, 개봉일, 영화 유형명, 제작국가, 영화감독명, 관람등급명, 배급사, 성수기여부, 대표장르, 흥행등급 반환",
         operation_description=" ",
         manual_parameters=[
-            Parameter("movie_name", IN_QUERY, type=TYPE_STRING,
-                      description="영화 제목, (required : False)", required=False),
+            Parameter("hit_grade", IN_QUERY, type=TYPE_STRING,
+                      description="영화 흥행 등급, (required : False)", required=False),
         ],
     )
     def list(self, request):
