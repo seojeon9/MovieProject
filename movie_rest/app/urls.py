@@ -60,9 +60,9 @@ router.register(r'movie/movie_movie_show', rest_view.MovieShowViewSet)
 
 schema_view = get_schema_view(
     openapi.Info(
-        title="CORONA_API",
+        title="MOVIE_API",
         default_version='v2',
-        description="CORONA_API description",
+        description="MOVIE_API",
     ),
     public=True,
 )

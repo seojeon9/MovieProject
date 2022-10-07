@@ -40,15 +40,10 @@ class MovieActorViewSet(viewsets.ReadOnlyModelViewSet):
 
     @swagger_auto_schema(
         operation_summary="영화코드 별 영화이름, 배우이름, 흥행등급 목록 반환",
-        operation_description="""시작날짜와 끝날짜를 모두 생략하면 최근 1주일 데이터를 반환합니다. <br>
-        시작날짜만 입력하면 시작날짜 이후의 데이터를 반환합니다.<br>
-        끝날짜만 입력하면 끝날짜 이전 데이터를 반환합니다.<br>
-         """,
+        operation_description="영화 제목을 입력하면 데이터를 반환합니다",
         manual_parameters=[
-            Parameter("start_date", IN_QUERY, type=TYPE_STRING,
-                      description="시작 날짜, (format :yyyy-MM-dd), (required : False)"),
-            Parameter("end_date", IN_QUERY, type=TYPE_STRING,
-                      description="끝날짜, (format :yyyy-MM-dd), (required : False)", required=False),
+            Parameter("movie_name", IN_QUERY, type=TYPE_STRING,
+                      description="영화 제목, (required : False)", required=False),
         ],
     )
     def list(self, request):
@@ -59,6 +54,10 @@ class MovieActorViewSet(viewsets.ReadOnlyModelViewSet):
         serializers = self.get_serializer(queryset, many=True)
         return JsonResponse(serializers.data, safe=False)
 
+    @swagger_auto_schema(auto_schema=None)
+    def retrieve(self, request):
+        pass
+
 
 class MovieCompanyViewSet(viewsets.ReadOnlyModelViewSet):
     queryset = Company.objects.all()
@@ -68,20 +67,21 @@ class MovieCompanyViewSet(viewsets.ReadOnlyModelViewSet):
     @swagger_auto_schema(
         operation_summary="영화코드 별 영화사이름, 영화사종류, 흥행등급 목록 반환",
         operation_description=" ",
-
         manual_parameters=[
-            Parameter("start_date", IN_QUERY, type=TYPE_STRING,
-                      description="시작 날짜, (format :yyyy-MM-dd), (required : False)"),
-            Parameter("end_date", IN_QUERY, type=TYPE_STRING,
-                      description="끝날짜, (format :yyyy-MM-dd), (required : False)", required=False),
+            Parameter("hit_grade", IN_QUERY, type=TYPE_STRING,
+                      description="영화 흥행 등급, (required : False)", required=False),
         ],
     )
     def list(self, request):
         query_params = request.query_params
-        queryset = get_queryset_by_date(Company, query_params)
+        queryset = Company.objects.filter(hit_grade__contains = query_params['hit_grade'] )
         print('params : >>>>>>>>>>>>>>>>>>>> ', query_params)
         serializers = self.get_serializer(queryset, many=True)
-        return JsonResponse(serializers.data)
+        return JsonResponse(serializers.data, safe=False)
+
+    @swagger_auto_schema(auto_schema=None)
+    def retrieve(self, request):
+        pass
 
 
 class MovieGenreViewSet(viewsets.ReadOnlyModelViewSet):
@@ -92,20 +92,21 @@ class MovieGenreViewSet(viewsets.ReadOnlyModelViewSet):
     @swagger_auto_schema(
         operation_summary="영화코드 별 장르이름, 흥행등급 목록 반환",
         operation_description=" ",
-
         manual_parameters=[
-            Parameter("start_date", IN_QUERY, type=TYPE_STRING,
-                      description="시작 날짜, (format :yyyy-MM-dd), (required : False)"),
-            Parameter("end_date", IN_QUERY, type=TYPE_STRING,
-                      description="끝날짜, (format :yyyy-MM-dd), (required : False)", required=False),
+            Parameter("genre", IN_QUERY, type=TYPE_STRING,
+                      description="장르, (required : False)", required=False),
         ],
     )
     def list(self, request):
         query_params = request.query_params
-        queryset = get_queryset_by_date(Genre, query_params)
+        queryset = Genre.objects.filter(genre_name__contains = query_params['genre_name'] )
         print('params : >>>>>>>>>>>>>>>>>>>> ', query_params)
         serializers = self.get_serializer(queryset, many=True)
-        return JsonResponse(serializers.data)
+        return JsonResponse(serializers.data, safe=False)
+
+    @swagger_auto_schema(auto_schema=None)
+    def retrieve(self, request):
+        pass
 
 
 class MovieViewSet(viewsets.ReadOnlyModelViewSet):
@@ -114,22 +115,23 @@ class MovieViewSet(viewsets.ReadOnlyModelViewSet):
     permission_classes = [permissions.IsAuthenticated]
 
     @swagger_auto_schema(
-        operation_summary=" ",
+        operation_summary="영화 별 상영시간, 개봉일, 영화 유형명, 제작국가, 영화감독명, 관람등급명, 배급사, 성수기여부, 대표장르, 흥행등급 반환",
         operation_description=" ",
-
         manual_parameters=[
-            Parameter("start_date", IN_QUERY, type=TYPE_STRING,
-                      description="시작 날짜, (format :yyyy-MM-dd), (required : False)"),
-            Parameter("end_date", IN_QUERY, type=TYPE_STRING,
-                      description="끝날짜, (format :yyyy-MM-dd), (required : False)", required=False),
+            Parameter("movie_name", IN_QUERY, type=TYPE_STRING,
+                      description="영화 제목, (required : False)", required=False),
         ],
     )
     def list(self, request):
         query_params = request.query_params
-        queryset = get_queryset_by_date(Movie, query_params)
+        queryset = Movie.objects.filter(hit_grade__contains = query_params['hit_grade'] )
         print('params : >>>>>>>>>>>>>>>>>>>> ', query_params)
         serializers = self.get_serializer(queryset, many=True)
-        return JsonResponse(serializers.data)
+        return JsonResponse(serializers.data, safe=False)
+
+    @swagger_auto_schema(auto_schema=None)
+    def retrieve(self, request):
+        pass
 
 
 class MovieAudiViewSet(viewsets.ReadOnlyModelViewSet):
@@ -138,14 +140,11 @@ class MovieAudiViewSet(viewsets.ReadOnlyModelViewSet):
     permission_classes = [permissions.IsAuthenticated]
 
     @swagger_auto_schema(
-        operation_summary=" ",
+        operation_summary="영화 별 개봉일 관객수, 2주차관객수증가율, 흥행등급 반환",
         operation_description=" ",
-
         manual_parameters=[
-            Parameter("start_date", IN_QUERY, type=TYPE_STRING,
-                      description="시작 날짜, (format :yyyy-MM-dd), (required : False)"),
-            Parameter("end_date", IN_QUERY, type=TYPE_STRING,
-                      description="끝날짜, (format :yyyy-MM-dd), (required : False)", required=False),
+            Parameter("movie_name", IN_QUERY, type=TYPE_STRING,
+                      description="영화 제목, (required : False)", required=False),
         ],
     )
     def list(self, request):
@@ -153,7 +152,11 @@ class MovieAudiViewSet(viewsets.ReadOnlyModelViewSet):
         queryset = MovieAudi.objects.filter(hit_grade__contains = query_params['hit_grade'] )
         print('params : >>>>>>>>>>>>>>>>>>>> ', query_params)
         serializers = self.get_serializer(queryset, many=True)
-        return JsonResponse(serializers.data)
+        return JsonResponse(serializers.data, safe=False)
+
+    @swagger_auto_schema(auto_schema=None)
+    def retrieve(self, request):
+        pass
 
 
 class MovieHitViewSet(viewsets.ReadOnlyModelViewSet):
@@ -162,14 +165,11 @@ class MovieHitViewSet(viewsets.ReadOnlyModelViewSet):
     permission_classes = [permissions.IsAuthenticated]
 
     @swagger_auto_schema(
-        operation_summary=" ",
+        operation_summary="영화별 총관객수, 흥행등급 반환",
         operation_description=" ",
-
         manual_parameters=[
-            Parameter("start_date", IN_QUERY, type=TYPE_STRING,
-                      description="시작 날짜, (format :yyyy-MM-dd), (required : False)"),
-            Parameter("end_date", IN_QUERY, type=TYPE_STRING,
-                      description="끝날짜, (format :yyyy-MM-dd), (required : False)", required=False),
+            Parameter("hit_grade", IN_QUERY, type=TYPE_STRING,
+                      description="영화 흥행 등급, (required : False)", required=False),
         ],
     )
     def list(self, request):
@@ -179,6 +179,10 @@ class MovieHitViewSet(viewsets.ReadOnlyModelViewSet):
         serializers = self.get_serializer(queryset, many=True)
         return JsonResponse(serializers.data, safe=False)
 
+    @swagger_auto_schema(auto_schema=None)
+    def retrieve(self, request):
+        pass
+
 
 class MovieRankViewSet(viewsets.ReadOnlyModelViewSet):
     queryset = MovieRank.objects.all()
@@ -186,22 +190,23 @@ class MovieRankViewSet(viewsets.ReadOnlyModelViewSet):
     permission_classes = [permissions.IsAuthenticated]
 
     @swagger_auto_schema(
-        operation_summary=" ",
+        operation_summary="영화별 개봉일 1위 여부, 2주차순위하락여부, 흥행등급 반환",
         operation_description=" ",
-
         manual_parameters=[
-            Parameter("start_date", IN_QUERY, type=TYPE_STRING,
-                      description="시작 날짜, (format :yyyy-MM-dd), (required : False)"),
-            Parameter("end_date", IN_QUERY, type=TYPE_STRING,
-                      description="끝날짜, (format :yyyy-MM-dd), (required : False)", required=False),
+            Parameter("movie_name", IN_QUERY, type=TYPE_STRING,
+                      description="영화 제목, (required : False)", required=False),
         ],
     )
     def list(self, request):
         query_params = request.query_params
-        queryset = get_queryset_by_date(MovieRank, query_params)
+        queryset = MovieRank.objects.filter(hit_grade__contains = query_params['hit_grade'] )
         print('params : >>>>>>>>>>>>>>>>>>>> ', query_params)
         serializers = self.get_serializer(queryset, many=True)
-        return JsonResponse(serializers.data)
+        return JsonResponse(serializers.data, safe=False)
+
+    @swagger_auto_schema(auto_schema=None)
+    def retrieve(self, request):
+        pass
 
 
 class MovieSalesViewSet(viewsets.ReadOnlyModelViewSet):
@@ -210,14 +215,11 @@ class MovieSalesViewSet(viewsets.ReadOnlyModelViewSet):
     permission_classes = [permissions.IsAuthenticated]
 
     @swagger_auto_schema(
-        operation_summary=" ",
+        operation_summary="영화별 개봉일매출점유율, 평균매출점유율, 총매출액, 흥행등급 반환",
         operation_description=" ",
-
         manual_parameters=[
-            Parameter("start_date", IN_QUERY, type=TYPE_STRING,
-                      description="시작 날짜, (format :yyyy-MM-dd), (required : False)"),
-            Parameter("end_date", IN_QUERY, type=TYPE_STRING,
-                      description="끝날짜, (format :yyyy-MM-dd), (required : False)", required=False),
+            Parameter("movie_name", IN_QUERY, type=TYPE_STRING,
+                      description="영화 제목, (required : False)", required=False),
         ],
     )
     def list(self, request):
@@ -227,6 +229,10 @@ class MovieSalesViewSet(viewsets.ReadOnlyModelViewSet):
         serializers = self.get_serializer(queryset, many=True)
         return JsonResponse(serializers.data, safe=False)
 
+    @swagger_auto_schema(auto_schema=None)
+    def retrieve(self, request):
+        pass
+
 
 class MovieScoreViewSet(viewsets.ReadOnlyModelViewSet):
     queryset = MovieScore.objects.all()
@@ -234,14 +240,11 @@ class MovieScoreViewSet(viewsets.ReadOnlyModelViewSet):
     permission_classes = [permissions.IsAuthenticated]
 
     @swagger_auto_schema(
-        operation_summary=" ",
+        operation_summary="영화 별 전문가평점, 관람객평점, 네티즌평점, 흥행등급 반환",
         operation_description=" ",
-
         manual_parameters=[
-            Parameter("start_date", IN_QUERY, type=TYPE_STRING,
-                      description="시작 날짜, (format :yyyy-MM-dd), (required : False)"),
-            Parameter("end_date", IN_QUERY, type=TYPE_STRING,
-                      description="끝날짜, (format :yyyy-MM-dd), (required : False)", required=False),
+            Parameter("movie_name", IN_QUERY, type=TYPE_STRING,
+                      description="영화 제목, (required : False)", required=False),
         ],
     )
     def list(self, request):
@@ -249,7 +252,11 @@ class MovieScoreViewSet(viewsets.ReadOnlyModelViewSet):
         queryset = MovieScore.objects.filter(hit_grade__contains = query_params['hit_grade'] )
         print('params : >>>>>>>>>>>>>>>>>>>> ', query_params)
         serializers = self.get_serializer(queryset, many=True)
-        return JsonResponse(serializers.data)
+        return JsonResponse(serializers.data, safe=False)
+
+    @swagger_auto_schema(auto_schema=None)
+    def retrieve(self, request):
+        pass
 
 
 class MovieScrnViewSet(viewsets.ReadOnlyModelViewSet):
@@ -258,14 +265,11 @@ class MovieScrnViewSet(viewsets.ReadOnlyModelViewSet):
     permission_classes = [permissions.IsAuthenticated]
 
     @swagger_auto_schema(
-        operation_summary=" ",
+        operation_summary="영화 별 개봉일스크린수, 평균스크린수, 흥행등급 반환",
         operation_description=" ",
-
         manual_parameters=[
-            Parameter("start_date", IN_QUERY, type=TYPE_STRING,
-                      description="시작 날짜, (format :yyyy-MM-dd), (required : False)"),
-            Parameter("end_date", IN_QUERY, type=TYPE_STRING,
-                      description="끝날짜, (format :yyyy-MM-dd), (required : False)", required=False),
+            Parameter("movie_name", IN_QUERY, type=TYPE_STRING,
+                      description="영화 제목, (required : False)", required=False),
         ],
     )
     def list(self, request):
@@ -274,6 +278,7 @@ class MovieScrnViewSet(viewsets.ReadOnlyModelViewSet):
         print('params : >>>>>>>>>>>>>>>>>>>> ', query_params)
         serializers = self.get_serializer(queryset, many=True)
         return JsonResponse(serializers.data, safe=False)
+    
 
     @swagger_auto_schema(auto_schema=None)
     def retrieve(self, request):
@@ -287,22 +292,23 @@ class MovieSearchViewSet(viewsets.ReadOnlyModelViewSet):
     permission_classes = [permissions.IsAuthenticated]
 
     @swagger_auto_schema(
-        operation_summary=" ",
+        operation_summary="영화별 1, 2, 3주차 검색비율, 흥행등급 반환",
         operation_description=" ",
-
         manual_parameters=[
-            Parameter("start_date", IN_QUERY, type=TYPE_STRING,
-                      description="시작 날짜, (format :yyyy-MM-dd), (required : False)"),
-            Parameter("end_date", IN_QUERY, type=TYPE_STRING,
-                      description="끝날짜, (format :yyyy-MM-dd), (required : False)", required=False),
+            Parameter("movie_name", IN_QUERY, type=TYPE_STRING,
+                      description="영화 제목, (required : False)", required=False),
         ],
     )
     def list(self, request):
         query_params = request.query_params
-        queryset = get_queryset_by_date(MovieSearch, query_params)
+        queryset = MovieSearch.objects.filter(hit_grade__contains = query_params['hit_grade'] )
         print('params : >>>>>>>>>>>>>>>>>>>> ', query_params)
         serializers = self.get_serializer(queryset, many=True)
-        return JsonResponse(serializers.data)
+        return JsonResponse(serializers.data, safe=False)
+
+    @swagger_auto_schema(auto_schema=None)
+    def retrieve(self, request):
+        pass
 
 
 class MovieShowViewSet(viewsets.ReadOnlyModelViewSet):
@@ -311,14 +317,11 @@ class MovieShowViewSet(viewsets.ReadOnlyModelViewSet):
     permission_classes = [permissions.IsAuthenticated]
 
     @swagger_auto_schema(
-        operation_summary=" ",
+        operation_summary="영화 별 개봉일생영횟수, 평균상영횟수, 흥행등급 반환",
         operation_description=" ",
-
         manual_parameters=[
-            Parameter("start_date", IN_QUERY, type=TYPE_STRING,
-                      description="시작 날짜, (format :yyyy-MM-dd), (required : False)"),
-            Parameter("end_date", IN_QUERY, type=TYPE_STRING,
-                      description="끝날짜, (format :yyyy-MM-dd), (required : False)", required=False),
+            Parameter("movie_name", IN_QUERY, type=TYPE_STRING,
+                      description="영화 제목, (required : False)", required=False),
         ],
     )
     def list(self, request):
@@ -326,4 +329,8 @@ class MovieShowViewSet(viewsets.ReadOnlyModelViewSet):
         queryset = MovieShow.objects.filter(hit_grade__contains = query_params['hit_grade'] )
         print('params : >>>>>>>>>>>>>>>>>>>> ', query_params)
         serializers = self.get_serializer(queryset, many=True)
-        return JsonResponse(serializers.data)
+        return JsonResponse(serializers.data, safe=False)
+
+    @swagger_auto_schema(auto_schema=None)
+    def retrieve(self, request):
+        pass
