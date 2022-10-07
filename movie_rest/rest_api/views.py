@@ -93,7 +93,7 @@ class MovieGenreViewSet(viewsets.ReadOnlyModelViewSet):
         operation_summary="영화코드 별 장르이름, 흥행등급 목록 반환",
         operation_description=" ",
         manual_parameters=[
-            Parameter("genre", IN_QUERY, type=TYPE_STRING,
+            Parameter("genre_name", IN_QUERY, type=TYPE_STRING,
                       description="장르, (required : False)", required=False),
         ],
     )
@@ -118,8 +118,8 @@ class MovieViewSet(viewsets.ReadOnlyModelViewSet):
         operation_summary="영화 별 상영시간, 개봉일, 영화 유형명, 제작국가, 영화감독명, 관람등급명, 배급사, 성수기여부, 대표장르, 흥행등급 반환",
         operation_description=" ",
         manual_parameters=[
-            Parameter("movie_name", IN_QUERY, type=TYPE_STRING,
-                      description="영화 제목, (required : False)", required=False),
+            Parameter("hit_grade", IN_QUERY, type=TYPE_STRING,
+                      description="영화 흥행 등급, (required : False)", required=False),
         ],
     )
     def list(self, request):
@@ -143,7 +143,7 @@ class MovieAudiViewSet(viewsets.ReadOnlyModelViewSet):
         operation_summary="영화 별 개봉일 관객수, 2주차관객수증가율, 흥행등급 반환",
         operation_description=" ",
         manual_parameters=[
-            Parameter("movie_name", IN_QUERY, type=TYPE_STRING,
+            Parameter("hit_grade", IN_QUERY, type=TYPE_STRING,
                       description="영화 제목, (required : False)", required=False),
         ],
     )
@@ -193,7 +193,7 @@ class MovieRankViewSet(viewsets.ReadOnlyModelViewSet):
         operation_summary="영화별 개봉일 1위 여부, 2주차순위하락여부, 흥행등급 반환",
         operation_description=" ",
         manual_parameters=[
-            Parameter("movie_name", IN_QUERY, type=TYPE_STRING,
+            Parameter("hit_grade", IN_QUERY, type=TYPE_STRING,
                       description="영화 제목, (required : False)", required=False),
         ],
     )
@@ -218,7 +218,7 @@ class MovieSalesViewSet(viewsets.ReadOnlyModelViewSet):
         operation_summary="영화별 개봉일매출점유율, 평균매출점유율, 총매출액, 흥행등급 반환",
         operation_description=" ",
         manual_parameters=[
-            Parameter("movie_name", IN_QUERY, type=TYPE_STRING,
+            Parameter("hit_grade", IN_QUERY, type=TYPE_STRING,
                       description="영화 제목, (required : False)", required=False),
         ],
     )
@@ -243,7 +243,7 @@ class MovieScoreViewSet(viewsets.ReadOnlyModelViewSet):
         operation_summary="영화 별 전문가평점, 관람객평점, 네티즌평점, 흥행등급 반환",
         operation_description=" ",
         manual_parameters=[
-            Parameter("movie_name", IN_QUERY, type=TYPE_STRING,
+            Parameter("hit_grade", IN_QUERY, type=TYPE_STRING,
                       description="영화 제목, (required : False)", required=False),
         ],
     )
@@ -268,7 +268,7 @@ class MovieScrnViewSet(viewsets.ReadOnlyModelViewSet):
         operation_summary="영화 별 개봉일스크린수, 평균스크린수, 흥행등급 반환",
         operation_description=" ",
         manual_parameters=[
-            Parameter("movie_name", IN_QUERY, type=TYPE_STRING,
+            Parameter("hit_grade", IN_QUERY, type=TYPE_STRING,
                       description="영화 제목, (required : False)", required=False),
         ],
     )
@@ -295,7 +295,7 @@ class MovieSearchViewSet(viewsets.ReadOnlyModelViewSet):
         operation_summary="영화별 1, 2, 3주차 검색비율, 흥행등급 반환",
         operation_description=" ",
         manual_parameters=[
-            Parameter("movie_name", IN_QUERY, type=TYPE_STRING,
+            Parameter("hit_grade", IN_QUERY, type=TYPE_STRING,
                       description="영화 제목, (required : False)", required=False),
         ],
     )
@@ -320,7 +320,7 @@ class MovieShowViewSet(viewsets.ReadOnlyModelViewSet):
         operation_summary="영화 별 개봉일생영횟수, 평균상영횟수, 흥행등급 반환",
         operation_description=" ",
         manual_parameters=[
-            Parameter("movie_name", IN_QUERY, type=TYPE_STRING,
+            Parameter("hit_grade", IN_QUERY, type=TYPE_STRING,
                       description="영화 제목, (required : False)", required=False),
         ],
     )
