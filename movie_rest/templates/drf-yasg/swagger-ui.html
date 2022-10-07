@@ -1,6 +1,28 @@
-{% extends "common/base.html" %}
 {% load static %}
-{% block content %}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8"/>
+    <title>{% block title %}{{ title }}{% endblock %}</title>
+
+    {% block extra_head %}
+        {# -- Add any extra HTML heads tags here - except scripts and styles -- #}
+    {% endblock %}
+
+    {% block favicon %}
+        {# -- Maybe replace the favicon -- #}
+        <link rel="icon" type="image/png" href="{% static 'drf-yasg/swagger-ui-dist/favicon-32x32.png' %}"/>
+    {% endblock %}
+
+    {% block main_styles %}
+        <link rel="stylesheet" type="text/css" href="{% static 'drf-yasg/style.css' %}"/>
+        <link rel="stylesheet" type="text/css" href="{% static 'drf-yasg/swagger-ui-dist/swagger-ui.css' %}">
+    {% endblock %}
+
+
+</head>
+
+<body class="swagger-body">
 
 {% block extra_body %}
     {# -- Add any header/body markup here (rendered BEFORE the swagger-ui/redoc element) -- #}
@@ -62,6 +84,6 @@
         {% endblock %}
     </div>
 {% endif %}
-{% endblock %}
+</body>
 
 </html>

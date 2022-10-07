@@ -137,27 +137,29 @@
 			localStorage.clear();
 		})
 	}
-
+	
+	
 	const renderChart = (res) => {
-
+		
 		data = []
 		key = res[0].map(e => e.movie_name);
-
-		aBetween = res[0].sort((a, b) => a.open_sales_share - b.open_sales_share)
+		
+		
+		aBetween = res[0].sort((a, b) => a.audi_score - b.audi_score)
 		bBetween = res[1].sort((a, b) => a.tot_audi_cnt - b.tot_audi_cnt)
 
 		key.forEach(k => {
-
+			
 			a = res[0].filter((e) => e.movie_name == k)
 			b = res[1].filter((e) => e.movie_name == k)
-
+			
 			trace = {};
-			trace.x = [a[0].open_sales_share];
+			trace.x = [a[0].audi_score];
 			trace.y = [b[0].tot_audi_cnt];
 			trace.mode = 'markers',
 			trace.type = 'scatter',
 			trace.name = k;
-			trace.text  =a[0].hit_grade
+			trace.text = a[0].hit_grade
 			trace.marker = { size: 13 }
 			console.dir(trace)
 			data.push(trace)
@@ -165,29 +167,30 @@
 
 
 		var layout = {
-			
-
-			title:'관객수 개봉일 매출액점유율 총관객수의 상관관계'
+			xaxis: {title: "관람객 평점", size: 8}, 
+  			yaxis: {title: "총 관객 수", size: 8},
+			showlegend: false,
+			title:'관람객 평점과 총 관객 수의 상관관계'
 		};
-
+		
 
 		console.dir(data)
-
+		
 		Plotly.newPlot('chart', data, layout);
 	}
 
-
+	
 	async function getDataDouble(url1, url2){
-
+		
 		res1 = await getData(url1, 
 				{'hit_grade':movie_grade},
 				{'Content-Type': 'application/json'
 				,'Authorization':'Token '+ token })
 	
-
-		res2 = await  getData(url2, 
-					{'hit_grade':movie_grade},
-					{'Content-Type': 'application/json'
+				
+				res2 = await  getData(url2, 
+				{'hit_grade':movie_grade},
+				{'Content-Type': 'application/json'
 					,'Authorization':'Token '+ token })
 
 		return [res1, res2]
@@ -200,14 +203,21 @@
 		//start_date, end_date, token
 		movie_grade = document.querySelector('#movie_grade').value;
 
-		url1 = 'http://127.0.0.1/movie/movie_movie_sales/'
+
+		
+		url1 = 'http://127.0.0.1/movie/movie_movie_score/'
 		url2 = 'http://127.0.0.1/movie/movie_moviehit/'
-
-
-		getDataDouble(url1, url2)
+	
+		getDataDouble(url1,url2)
 		.then(res => {
 			renderChart(res)
 		})
+		
+
+
+
+
+
 
 
 	}
