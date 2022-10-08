@@ -24,17 +24,17 @@
 
 ### 1-5 기술 스택
 #### ETL 파이프라인
-- Data Lake : <img src="https://img.shields.io/badge/Hadoop-66CCFF?style=for-the-badge&logo=apachehadoop&logoColor=white"> 
-- Data Warehouse, Data Mart : <img src="https://img.shields.io/badge/Oracle ATP-F80000?style=for-the-badge&logo=oracle&logoColor=white">
-- 데이터 가공 및 분산처리엔진 : <img src="https://img.shields.io/badge/Spark-E25A1C?style=for-the-badge&logo=apachespark&logoColor=white">
-- 배치도구 : <img src="https://img.shields.io/badge/Airflow-017CEE?style=for-the-badge&logo=apacheairflow&logoColor=white">
+- Data Lake : <img src="https://img.shields.io/badge/Hadoop-66CCFF?style=flat-square&logo=apachehadoop&logoColor=black"> 
+- Data Warehouse, Data Mart : <img src="https://img.shields.io/badge/Oracle ATP-F80000?style=flat-square&logo=oracle&logoColor=white">
+- 데이터 가공 및 분산처리엔진 : <img src="https://img.shields.io/badge/Spark-E25A1C?style=flat-square&logo=apachespark&logoColor=white">
+- 배치도구 : <img src="https://img.shields.io/badge/Airflow-017CEE?style=flat-square&logo=apacheairflow&logoColor=black">
 #### REST-API Server
-- Web Framework : <img src="https://img.shields.io/badge/Django-092E20?style=for-the-badge&logo=django&logoColor=white">
+- Web Framework : <img src="https://img.shields.io/badge/Django-092E20?style=flat-square&logo=django&logoColor=white">
 #### BI
-- 언어 : <img src="https://img.shields.io/badge/html5-E34F26?style=for-the-badge&logo=html5&logoColor=white"> 
-  <img src="https://img.shields.io/badge/css-1572B6?style=for-the-badge&logo=css3&logoColor=white"> 
-  <img src="https://img.shields.io/badge/javascript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black"> 
-- 프레임워크 : <img src="https://img.shields.io/badge/bootstrap-7952B3?style=for-the-badge&logo=bootstrap&logoColor=white">
+- 언어 : <img src="https://img.shields.io/badge/html5-E34F26?style=flat-square&logo=html5&logoColor=white"> 
+  <img src="https://img.shields.io/badge/css-1572B6?style=flat-square&logo=css3&logoColor=white"> 
+  <img src="https://img.shields.io/badge/javascript-F7DF1E?style=flat-square&logo=javascript&logoColor=black"> 
+- 프레임워크 : <img src="https://img.shields.io/badge/bootstrap-7952B3?style=flat-square&logo=bootstrap&logoColor=white">
 
 ### 1-6 데이터 처리 프로세스
 - ETL 파이프라인 
