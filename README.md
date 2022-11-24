@@ -86,7 +86,6 @@
 ### 3-2 BI
 ![image](https://user-images.githubusercontent.com/72624263/194677120-30ace656-a29a-4bfe-981d-54b4f5afa4e3.png)
 ![image](https://user-images.githubusercontent.com/72624263/194677137-f6b2e75c-5565-4022-9dcd-77524089be36.png)
-![image](https://user-images.githubusercontent.com/72624263/194677165-fc33b7a6-6890-4ec9-9ddd-0611581cc7bd.png)
 ![image](https://user-images.githubusercontent.com/72624263/194677195-90209ad3-ac21-45e5-8b07-b831a1ee1197.png)
 <br>
 추후에 링크 추가 예정 
